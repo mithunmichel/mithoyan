@@ -55,8 +55,11 @@ window.addEventListener('scroll',()=>{
 /* ─── THEME #1 ─── */
 function toggleTheme(){
   const h=document.documentElement;
-  h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');
+  const next=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',next);
+  localStorage.setItem('theme',next);
 }
+(function(){const s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);})();
 
 /* ─── MOBILE MENU #6 ─── */
 function toggleMenu(){
@@ -213,23 +216,21 @@ if(portrait && art && divider){
 /* ─── 3D TILT ON PROJECT CARDS ─── */
 function initCardTilt(){
   document.querySelectorAll('.project-card').forEach(card=>{
-    // Remove old listeners by cloning
-    const clone = card.cloneNode(true);
-    card.parentNode.replaceChild(clone, card);
-    clone.addEventListener('mousemove',e=>{
-      const r=clone.getBoundingClientRect();
+    if(card._tiltInit) return;
+    card._tiltInit = true;
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
       const x=((e.clientX-r.left)/r.width-.5)*10;
       const y=((e.clientY-r.top)/r.height-.5)*-10;
-      clone.style.transform=`perspective(800px) rotateX(${y}deg) rotateY(${x}deg) translateY(-8px)`;
-      clone.style.transition='transform .1s';
+      card.style.transform=`perspective(800px) rotateX(${y}deg) rotateY(${x}deg) translateY(-8px)`;
+      card.style.transition='transform .1s';
     });
-    clone.addEventListener('mouseleave',()=>{
-      clone.style.transform='perspective(800px) rotateX(0) rotateY(0) translateY(0)';
-      clone.style.transition='transform .6s cubic-bezier(0.16,1,0.3,1)';
+    card.addEventListener('mouseleave',()=>{
+      card.style.transform='perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+      card.style.transition='transform .6s cubic-bezier(0.16,1,0.3,1)';
     });
-    // Re-attach cursor hover listener
-    clone.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
-    clone.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+    card.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+    card.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
   });
 }
 initCardTilt();
