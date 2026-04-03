@@ -23,11 +23,11 @@
 
 <!-- Mobile menu overlay -->
 <div id="mob-menu">
-  <a href="javascript:void(0)" onclick="closeMenu();navTo('home')">Home</a>
-  <a href="javascript:void(0)" onclick="closeMenu();goPage('projects')">Projects</a>
-  <a href="javascript:void(0)" onclick="closeMenu();goPage('illustrations')">Illustrations</a>
-  <a href="javascript:void(0)" onclick="closeMenu();navTo('about')">About</a>
-  <a href="javascript:void(0)" onclick="closeMenu();navTo('contact')">Contact</a>
+  <a href="javascript:void(0)" data-nav="nav-home"     onclick="closeMenu();navTo('home')">Home</a>
+  <a href="javascript:void(0)" data-nav="nav-projects" onclick="closeMenu();goPage('projects')">Projects</a>
+  <a href="javascript:void(0)" data-nav="nav-illus"    onclick="closeMenu();goPage('illustrations')">Illustrations</a>
+  <a href="javascript:void(0)" data-nav="nav-about"    onclick="closeMenu();navTo('about')">About</a>
+  <a href="javascript:void(0)" data-nav="nav-contact"  onclick="closeMenu();navTo('contact')">Contact</a>
   <div class="mob-toggle-row">
     <span>Theme</span>
     <button class="theme-btn" onclick="toggleTheme()" style="cursor:pointer">
@@ -44,20 +44,18 @@
   <a href="javascript:void(0)" class="nav-logo" onclick="goPage('home')">Mithun<span>.</span></a>
   <div class="nav-right">
     <div class="nav-links">
-      <a href="javascript:void(0)" onclick="navTo('home')">Home</a>
-      <a href="javascript:void(0)" onclick="goPage('projects')">Projects</a>
-      <a href="javascript:void(0)" onclick="goPage('illustrations')">Illustrations</a>
-      <a href="javascript:void(0)" onclick="navTo('about')">About</a>
-      <a href="javascript:void(0)" onclick="navTo('contact')">Contact</a>
+      <a href="javascript:void(0)" data-nav="nav-home"     onclick="navTo('home')"          class="active">Home</a>
+      <a href="javascript:void(0)" data-nav="nav-projects" onclick="goPage('projects')">Projects</a>
+      <a href="javascript:void(0)" data-nav="nav-illus"    onclick="goPage('illustrations')">Illustrations</a>
+      <a href="javascript:void(0)" data-nav="nav-about"    onclick="navTo('about')">About</a>
+      <a href="javascript:void(0)" data-nav="nav-contact"  onclick="navTo('contact')">Contact</a>
     </div>
-    <!-- theme toggle always visible -->
-    <button class="theme-btn" onclick="toggleTheme()">
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
       <div class="theme-btn-thumb">
         <svg class="thumb-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
         <svg class="thumb-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       </div>
     </button>
-    <!-- hamburger mobile only -->
     <button class="hamburger" id="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </button>

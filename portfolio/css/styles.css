@@ -461,7 +461,7 @@ a.project-card{text-decoration:none;color:inherit;display:block}
 .about-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:72px;align-items:start}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:44px}}
 
-.about-portrait{aspect-ratio:5/8;background:var(--bg3);position:relative;overflow:hidden;border:1px solid var(--border2);border-radius:4px}
+.about-portrait{aspect-ratio:3/4;max-height:480px;background:var(--bg3);position:relative;overflow:hidden;border:1px solid var(--border2);border-radius:4px}
 .portrait-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--bg3) 0%,var(--surface) 100%)}
 .portrait-init{font-family:'Inter',sans-serif;font-size:5rem;font-weight:800;color:var(--accent);opacity:.15;letter-spacing:-.05em}
 /* Split portrait reveal */
