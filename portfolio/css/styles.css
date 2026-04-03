@@ -398,6 +398,7 @@ section{padding:160px 48px}
 @media(max-width:900px){.projects-grid{grid-template-columns:1fr;gap:16px}}
 
 /* #8 — less boxy, lift on hover */
+a.project-card{text-decoration:none;color:inherit;display:block}
 .project-card{
   background:var(--bg2);
   cursor:pointer;position:relative;overflow:hidden;
