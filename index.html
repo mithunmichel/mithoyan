@@ -54,9 +54,11 @@ html{scroll-behavior:smooth;font-size:16px}
 body{
   background:var(--bg);color:var(--text);
   font-family:'Inter',sans-serif;font-weight:400;
-  line-height:1.6;overflow-x:hidden;cursor:none;
+  line-height:1.6;overflow-x:hidden;
+  cursor:auto;
   transition:background .5s var(--ease),color .5s var(--ease);
 }
+body.cursor-ready{cursor:none}
 ::-webkit-scrollbar{width:2px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border3)}
@@ -64,7 +66,7 @@ body{
 /* ═══════════════════════════════════════
    CURSOR
 ═══════════════════════════════════════ */
-#cur{position:fixed;top:0;left:0;z-index:9999;pointer-events:none}
+#cur{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;opacity:0;transition:opacity .3s}
 #cur-d{
   position:absolute;width:6px;height:6px;
   background:var(--accent);border-radius:50%;
@@ -80,7 +82,7 @@ body{
 }
 body.ch #cur-d{width:10px;height:10px}
 body.ch #cur-r{width:52px;height:52px;opacity:.7}
-@media(max-width:768px){#cur,#cur-d,#cur-r{display:none}body{cursor:auto}}
+@media(max-width:768px){#cur,#cur-d,#cur-r{display:none}body,body.cursor-ready{cursor:auto}}
 
 /* ═══════════════════════════════════════
    PAGE WIPE
@@ -1256,7 +1258,29 @@ function setActiveNav(page){
 /* ─── CURSOR ─── */
 const cd=document.getElementById('cur-d'),cr=document.getElementById('cur-r');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px'});
+let cursorActive = false;
+
+// Only activate custom cursor on true pointer devices
+document.addEventListener('mousemove',e=>{
+  if(!cursorActive){
+    cursorActive = true;
+    document.body.classList.add('cursor-ready');
+    document.getElementById('cur').style.opacity = '1';
+  }
+  mx=e.clientX;my=e.clientY;
+  cd.style.left=mx+'px';cd.style.top=my+'px';
+});
+
+// Hide cursor when mouse leaves window
+document.addEventListener('mouseleave',()=>{
+  if(cd) cd.style.opacity='0';
+  if(cr) cr.style.opacity='0';
+});
+document.addEventListener('mouseenter',()=>{
+  if(cd) cd.style.opacity='1';
+  if(cr) cr.style.opacity='.4';
+});
+
 (function raf(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(raf)})();
 document.querySelectorAll('a,button,.project-card,.illus-item,.social-l,.skill-c,.mod-chip,.pillar,.ps').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
