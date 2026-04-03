@@ -153,6 +153,8 @@ nav.scrolled{
   position:relative;
   transition:background .4s;
   flex-shrink:0;padding:0;
+  z-index:210;
+  pointer-events:all !important;
 }
 [data-theme="light"] .theme-btn{background:#fde68a}
 .theme-btn-thumb{
@@ -455,7 +457,7 @@ section{padding:160px 48px}
    ABOUT
 ═══════════════════════════════════════ */
 #about{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.about-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:90px;align-items:start}
+.about-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:72px;align-items:start}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:44px}}
 
 .about-portrait{aspect-ratio:5/8;background:var(--bg3);position:relative;overflow:hidden;border:1px solid var(--border2);border-radius:4px}
@@ -509,10 +511,9 @@ section{padding:160px 48px}
 
 .about-portrait::after{display:none}
 
-.about-badge{margin-top:20px;padding:16px;border:1px solid var(--border2);background:var(--bg);border-radius:4px}
-.badge-school{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-/* #5 — badge text bump */
-.badge-deg{font-size:.9rem;color:var(--text2);line-height:1.6}
+.about-badge{margin-top:16px;padding:14px 16px;border:1px solid var(--border2);background:var(--bg);border-radius:4px}
+.badge-location{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text);margin-bottom:5px;font-weight:500}
+.badge-avail{font-size:.82rem;color:var(--text3);line-height:1.5}
 
 /* #5 — about text bump */
 .about-text p{color:var(--text2);line-height:2.0;margin-bottom:24px;font-size:1.02rem}

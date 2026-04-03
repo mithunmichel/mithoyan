@@ -97,6 +97,7 @@ function goPage(name){
       wipe.className='';
       triggerReveals();
       if(name==='illustrations') initIllusPage();
+      if(name==='home') initCardTilt();
     },600);
   },560);
 }
@@ -210,19 +211,28 @@ if(portrait && art && divider){
 }
 
 /* ─── 3D TILT ON PROJECT CARDS ─── */
-document.querySelectorAll('.project-card').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    const x=((e.clientX-r.left)/r.width-.5)*10;
-    const y=((e.clientY-r.top)/r.height-.5)*-10;
-    card.style.transform=`perspective(800px) rotateX(${y}deg) rotateY(${x}deg) translateY(-8px)`;
-    card.style.transition='transform .1s';
+function initCardTilt(){
+  document.querySelectorAll('.project-card').forEach(card=>{
+    // Remove old listeners by cloning
+    const clone = card.cloneNode(true);
+    card.parentNode.replaceChild(clone, card);
+    clone.addEventListener('mousemove',e=>{
+      const r=clone.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width-.5)*10;
+      const y=((e.clientY-r.top)/r.height-.5)*-10;
+      clone.style.transform=`perspective(800px) rotateX(${y}deg) rotateY(${x}deg) translateY(-8px)`;
+      clone.style.transition='transform .1s';
+    });
+    clone.addEventListener('mouseleave',()=>{
+      clone.style.transform='perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+      clone.style.transition='transform .6s cubic-bezier(0.16,1,0.3,1)';
+    });
+    // Re-attach cursor hover listener
+    clone.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+    clone.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
   });
-  card.addEventListener('mouseleave',()=>{
-    card.style.transform='perspective(800px) rotateX(0) rotateY(0) translateY(0)';
-    card.style.transition='transform .6s cubic-bezier(0.16,1,0.3,1)';
-  });
-});
+}
+initCardTilt();
 
 /* ─── ILLUSTRATIONS ─── */
 const illusData=[
