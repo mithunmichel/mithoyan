@@ -68,20 +68,21 @@ body.cursor-ready{cursor:none}
 ═══════════════════════════════════════ */
 #cur{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;opacity:0;transition:opacity .3s}
 #cur-d{
-  position:absolute;width:6px;height:6px;
+  position:absolute;width:8px;height:8px;
   background:var(--accent);border-radius:50%;
   transform:translate(-50%,-50%);
-  transition:width .15s,height .15s;
+  transition:width .2s var(--ease),height .2s var(--ease);
 }
 #cur-r{
-  position:absolute;width:32px;height:32px;
-  border:1px solid var(--accent);border-radius:50%;
+  position:absolute;width:40px;height:40px;
+  border:1.5px solid rgba(255,255,255,0.7);border-radius:50%;
   transform:translate(-50%,-50%);
-  transition:width .4s var(--ease),height .4s var(--ease),opacity .3s;
-  opacity:.4;mix-blend-mode:difference;
+  transition:width .5s var(--ease),height .5s var(--ease),opacity .3s;
+  opacity:.6;
+  mix-blend-mode:difference;
 }
-body.ch #cur-d{width:10px;height:10px}
-body.ch #cur-r{width:52px;height:52px;opacity:.7}
+body.ch #cur-d{width:14px;height:14px}
+body.ch #cur-r{width:64px;height:64px;opacity:.9}
 @media(max-width:768px){#cur,#cur-d,#cur-r{display:none}body,body.cursor-ready{cursor:auto}}
 
 /* ═══════════════════════════════════════
@@ -89,10 +90,11 @@ body.ch #cur-r{width:52px;height:52px;opacity:.7}
 ═══════════════════════════════════════ */
 #wipe{
   position:fixed;inset:0;z-index:8888;
-  background:var(--bg3);transform:translateY(100%);pointer-events:none;
+  background:var(--bg3);transform:translateY(100%);
+  pointer-events:none;
 }
-#wipe.in{animation:wipeIn .55s var(--ease) forwards}
-#wipe.out{animation:wipeOut .55s var(--ease) forwards}
+#wipe.in{animation:wipeIn .55s var(--ease) forwards;pointer-events:all}
+#wipe.out{animation:wipeOut .55s var(--ease) forwards;pointer-events:all}
 @keyframes wipeIn{from{transform:translateY(100%)}to{transform:translateY(0%)}}
 @keyframes wipeOut{from{transform:translateY(0%)}to{transform:translateY(-100%)}}
 
@@ -100,7 +102,7 @@ body.ch #cur-r{width:52px;height:52px;opacity:.7}
    NAV
 ═══════════════════════════════════════ */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
+  position:fixed;top:0;left:0;right:0;z-index:200;
   height:var(--nav-h);
   display:flex;align-items:center;justify-content:space-between;
   padding:0 48px;
@@ -113,7 +115,7 @@ nav.scrolled{
   border-bottom-color:var(--border);
 }
 [data-theme="light"] nav.scrolled{background:rgba(242,237,228,.92)}
-.nav-right{display:flex;align-items:center;gap:36px}
+.nav-right{display:flex;align-items:center;gap:36px;pointer-events:all}
 
 .nav-logo{
   font-family:'Inter',sans-serif;
@@ -129,7 +131,9 @@ nav.scrolled{
   font-family:'DM Mono',monospace;
   font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
   color:var(--text2);text-decoration:none;
-  position:relative;transition:color .3s;cursor:none;
+  position:relative;transition:color .3s;
+  cursor:none;
+  -webkit-user-select:none;user-select:none;
 }
 .nav-links a::after{
   content:'';position:absolute;bottom:-4px;left:0;
@@ -343,7 +347,10 @@ nav.scrolled{
 }
 @keyframes sdrop{0%{top:-100%}55%{top:100%}100%{top:100%}}
 
-/* #7 — IIT stat fix */
+/* Hero animations fire via CSS keyframes, not scroll reveal */
+.hero-eyebrow,.hero-name,.hero-role,.hero-desc,.hero-ctas,.scroll-hint,.hero-stats{
+  pointer-events:all;
+}
 .hero-stats{
   position:absolute;bottom:40px;right:48px;z-index:1;
   display:flex;gap:44px;align-items:flex-end;
@@ -620,8 +627,8 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
 /* ═══════════════════════════════════════
    REVEALS
 ═══════════════════════════════════════ */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
-.reveal.vis{opacity:1;transform:translateY(0)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .85s var(--ease),transform .85s var(--ease);pointer-events:none}
+.reveal.vis{opacity:1;transform:translateY(0);pointer-events:all}
 .rd1{transition-delay:.08s}.rd2{transition-delay:.16s}.rd3{transition-delay:.24s}.rd4{transition-delay:.32s}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes wordUp{from{opacity:0;transform:translateY(110%)}to{opacity:1;transform:translateY(0)}}
@@ -1281,7 +1288,7 @@ document.addEventListener('mouseenter',()=>{
   if(cr) cr.style.opacity='.4';
 });
 
-(function raf(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(raf)})();
+(function raf(){rx+=(mx-rx)*.08;ry+=(my-ry)*.08;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(raf)})();
 document.querySelectorAll('a,button,.project-card,.illus-item,.social-l,.skill-c,.mod-chip,.pillar,.ps').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
@@ -1324,7 +1331,11 @@ function goPage(name){
   setTimeout(()=>{
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     const t=document.getElementById('page-'+name);
-    if(t)t.classList.add('active');
+    if(t){
+      t.classList.add('active');
+      // Reset reveals only on the new page
+      t.querySelectorAll('.reveal').forEach(el=>el.classList.remove('vis'));
+    }
     currentPage = name;
     setActiveNav(name);
     window.scrollTo(0,0);
@@ -1359,13 +1370,37 @@ function toSec(id){
 
 /* ─── SCROLL REVEAL ─── */
 function triggerReveals(){
-  const els=document.querySelectorAll('.page.active .reveal');
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
-  },{threshold:.08,rootMargin:'0px 0px -32px 0px'});
-  els.forEach(el=>{el.classList.remove('vis');obs.observe(el)});
+  const els = document.querySelectorAll('.page.active .reveal');
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) e.target.classList.add('vis');
+    });
+  }, {threshold:0.05});
+
+  els.forEach(el => {
+    // Only process elements not already visible
+    if(!el.classList.contains('vis')){
+      const rect = el.getBoundingClientRect();
+      if(rect.top < window.innerHeight * 0.98){
+        el.classList.add('vis');
+      } else {
+        obs.observe(el);
+      }
+    }
+  });
 }
-setTimeout(triggerReveals,300);
+
+// Scroll fallback
+window.addEventListener('scroll', ()=>{
+  document.querySelectorAll('.page.active .reveal:not(.vis)').forEach(el=>{
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight * 0.95) el.classList.add('vis');
+  });
+},{passive:true});
+
+setTimeout(triggerReveals, 100);
+setTimeout(triggerReveals, 800);
 
 // Set initial active nav state
 setActiveNav('home');
