@@ -3,284 +3,326 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flyght Cloud — Case Study · Mithun Murali</title>
+<title>Flyght Cloud — Mithun Murali</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── BASE TOKENS (mirrors your styles.css) ── */
 :root{
-  --bg:#0b0b0b;--bg2:#111;--bg3:#161616;
-  --text1:#f0ede8;--text2:#b8b2a8;--text3:#7a7570;
-  --accent:#c8a060;--accent2:#a07840;
-  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.1);
+  --bg:#0b0b0b;--bg2:#1a1a1a;--bg3:#222;
+  --text1:#f0ede8;--text2:#b8b2a8;--text3:#8a8580;
+  --accent:#4a8cc8;--accent2:#3a6ca8;
+  --border:rgba(255,255,255,.09);--border2:rgba(255,255,255,.14);
   --radius:6px;
 }
 [data-theme="light"]{
-  --bg:#f8f6f2;--bg2:#f0ede8;--bg3:#e8e4de;
-  --text1:#1a1814;--text2:#4a4640;--text3:#8a8580;
-  --border:rgba(0,0,0,.07);--border2:rgba(0,0,0,.12);
+  --bg:#f8f6f2;--bg2:#eeebe6;--bg3:#e4e0da;
+  --text1:#1a1814;--text2:#4a4640;--text3:#7a7570;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.14);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text1);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 em{color:var(--accent);font-style:normal}
+strong{color:var(--text1);font-weight:600}
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(11,11,11,.85);backdrop-filter:blur(20px)}
-.nav-logo{font-size:1.1rem;font-weight:700;letter-spacing:-.02em}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(11,11,11,.9);backdrop-filter:blur(20px);transition:background .3s}
+.nav-logo{font-size:1.1rem;font-weight:700;letter-spacing:-.02em;color:var(--text1)}
 .nav-logo span{color:var(--accent)}
-.nav-back{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);border:1px solid var(--border2);padding:8px 16px;border-radius:2px;transition:all .25s}
-.nav-back:hover{color:var(--accent);border-color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:32px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:.82rem;color:var(--text3);transition:color .25s}
+.nav-links a:hover,.nav-links a.active{color:var(--text1)}
+.theme-btn{width:44px;height:26px;border-radius:13px;border:1px solid var(--border2);background:var(--bg2);cursor:pointer;position:relative;padding:0;flex-shrink:0}
+.theme-btn-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);transition:transform .3s;display:flex;align-items:center;justify-content:center}
+[data-theme="light"] .theme-btn-thumb{transform:translateX(18px)}
+.thumb-sun,.thumb-moon{position:absolute;width:10px;height:10px;transition:opacity .3s;color:var(--text3)}
+.thumb-sun{opacity:1}.thumb-moon{opacity:0}
+[data-theme="light"] .thumb-sun{opacity:0}[data-theme="light"] .thumb-moon{opacity:1}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text2);transition:all .3s}
+#mob-menu{display:none;position:fixed;inset:0;top:64px;background:var(--bg);z-index:99;flex-direction:column;padding:32px 24px;gap:4px;border-top:1px solid var(--border)}
+#mob-menu.open{display:flex}
+#mob-menu a{font-size:1.1rem;font-weight:600;color:var(--text2);padding:16px 0;border-bottom:1px solid var(--border)}
+.mob-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:var(--text3);font-size:.85rem}
+@media(max-width:768px){nav{padding:0 24px}.nav-links{display:none}.hamburger{display:flex}}
 
-/* ── HERO ── */
-.cs-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:100px 80px 80px;position:relative;border-bottom:1px solid var(--border);overflow:hidden}
-.cs-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(74,148,200,.07) 0%,transparent 70%);pointer-events:none}
-.cs-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+/* PROGRESS BAR */
+#progress-bar{position:fixed;top:64px;left:0;height:2px;background:var(--accent);width:0%;z-index:99;transition:width .1s linear}
 
-/* Back link — sits inside hero, top-left */
-.cs-back-link{position:absolute;top:100px;left:80px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:inline-flex;align-items:center;gap:8px;transition:color .25s}
+/* HERO */
+.cs-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 0 80px;position:relative;border-bottom:1px solid var(--border);overflow:hidden}
+.cs-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(74,140,200,.06) 0%,transparent 70%);pointer-events:none}
+.cs-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:56px 56px;pointer-events:none}
+.cs-hero-wrap{max-width:1200px;margin:0 auto;width:100%;padding:0 80px;position:relative;z-index:1}
+.cs-back-link{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:500;color:var(--text3);margin-bottom:48px;transition:color .25s}
 .cs-back-link:hover{color:var(--accent)}
-
-/* Hero two-column layout */
-.cs-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:flex-end;position:relative;z-index:1}
-.cs-hero-text{display:flex;flex-direction:column}
-
-/* Hero image placeholder */
-.cs-hero-visual{position:relative}
-.hero-img-placeholder{width:100%;aspect-ratio:4/3;border:1.5px dashed rgba(200,160,96,.2);border-radius:8px;background:rgba(255,255,255,.02);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.hero-img-placeholder::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,148,200,.04),rgba(200,160,96,.03));pointer-events:none}
+.cs-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.cs-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.cs-eyebrow::after{content:'';flex:1;max-width:48px;height:1px;background:var(--accent);opacity:.4}
+.cs-title{font-size:clamp(2.8rem,5vw,4.8rem);font-weight:800;line-height:1.0;letter-spacing:-.04em;margin-bottom:20px}
+.cs-subtitle{font-size:1rem;color:var(--text2);max-width:480px;line-height:1.85;margin-bottom:36px}
+.cs-meta-row{display:flex;gap:32px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--border)}
+.cs-meta-item{display:flex;flex-direction:column;gap:5px}
+.cs-meta-label{font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3)}
+.cs-meta-val{font-size:.85rem;color:var(--text1);font-weight:500}
+.hero-img-placeholder{width:100%;aspect-ratio:4/3;border:1.5px dashed rgba(74,140,200,.2);border-radius:8px;background:rgba(255,255,255,.02);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;cursor:pointer}
+.hero-img-placeholder::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,140,200,.04),transparent);pointer-events:none}
 .hip-inner{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:32px;position:relative;z-index:1}
 .hip-label{font-size:.85rem;font-weight:600;color:var(--text3)}
-.hip-sub{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(200,160,96,.4);line-height:1.8;text-align:center}
+.hip-sub{font-size:.7rem;color:rgba(74,140,200,.45);line-height:1.8;text-align:center}
 
-.cs-eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.cs-eyebrow::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);opacity:.4}
-.cs-title{font-size:clamp(3rem,5vw,5rem);font-weight:800;line-height:1.0;letter-spacing:-.04em;margin-bottom:24px}
-.cs-subtitle{font-size:1rem;color:var(--text2);max-width:480px;line-height:1.85;margin-bottom:40px}
-.cs-meta-row{display:flex;gap:36px;flex-wrap:wrap;padding-top:28px;border-top:1px solid var(--border)}
-.cs-meta-item{display:flex;flex-direction:column;gap:6px}
-.cs-meta-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
-.cs-meta-val{font-size:.85rem;color:var(--text1);font-weight:500}
+/* SECTION */
+.wrap{max-width:1200px;margin:0 auto;width:100%;padding:0 80px}
+.cs-section{padding:88px 0;border-bottom:1px solid var(--border)}
+.cs-section-full{padding:88px 80px;border-bottom:1px solid var(--border)}
+.section-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:28px}
+.body-text{font-size:.98rem;color:var(--text2);line-height:1.9;margin-bottom:18px}
+.two-col{display:grid;grid-template-columns:5fr 4fr;gap:72px;align-items:start}
+.cs-divider{width:40px;height:2px;background:var(--accent);opacity:.5;margin:20px 0}
 
-/* ── SECTION SHELL ── */
-.cs-section{padding:100px 80px;border-bottom:1px solid var(--border);max-width:1200px;margin:0 auto;width:100%}
-.cs-section-full{padding:100px 80px;border-bottom:1px solid var(--border)}
-.section-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
-.section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:32px}
-.body-text{font-size:.98rem;color:var(--text2);line-height:1.9;margin-bottom:20px}
-.body-text strong{color:var(--text1);font-weight:600}
-
-/* ── TWO COL ── */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.two-col-narrow{display:grid;grid-template-columns:5fr 4fr;gap:80px;align-items:start}
-
-/* ── PROBLEM SCALE VISUAL ── */
-.scale-visual{display:flex;flex-direction:column;gap:10px;padding:32px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
-.scale-bar-row{display:flex;align-items:center;gap:14px}
-.scale-bar-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;color:var(--text3);width:80px;text-align:right;flex-shrink:0}
-.scale-bar{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--accent),rgba(74,148,200,.6));opacity:.7}
-.scale-bar.full{width:100%;opacity:.15;background:var(--border2)}
-.scale-caption{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;color:var(--text3);margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
-
-/* ── BULLET LIST ── */
-.cs-bullets{list-style:none;display:flex;flex-direction:column;gap:12px;margin:20px 0}
-.cs-bullets li{display:flex;align-items:flex-start;gap:12px;font-size:.93rem;color:var(--text2);line-height:1.7}
+/* BULLETS */
+.cs-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.cs-bullets li{display:flex;align-items:flex-start;gap:12px;font-size:.93rem;color:var(--text2);line-height:1.75}
 .cs-bullets li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);margin-top:9px;flex-shrink:0}
 
-/* ── ROLE + CHALLENGE GRID ── */
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px}
-.role-card{padding:28px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
-.role-card h3{font-size:.75rem;font-family:'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+/* SCALE VISUAL */
+.scale-visual{display:flex;flex-direction:column;gap:10px;padding:28px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
+.scale-bar-row{display:flex;align-items:center;gap:12px}
+.scale-bar-label{font-size:.75rem;font-weight:500;color:var(--text3);width:72px;text-align:right;flex-shrink:0}
+.scale-bar{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--accent),rgba(74,148,200,.5));opacity:.8}
+.scale-bar-track{flex:1;height:6px;border-radius:3px;background:var(--border2)}
+.scale-caption{font-size:.75rem;color:var(--text3);margin-top:16px;padding-top:16px;border-top:1px solid var(--border);line-height:1.7}
 
-/* ── APPROACH STEPS ── */
-.approach-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:40px}
-.ap-step{background:var(--bg2);padding:32px 24px;position:relative}
-.ap-step::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--accent);opacity:.4;font-size:1rem;z-index:1}
+/* ROLE GRID */
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.role-card{padding:24px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
+.role-card h3{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+
+/* APPROACH */
+.approach-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:36px}
+.ap-step{background:var(--bg2);padding:28px 20px;position:relative}
+.ap-step::after{content:'→';position:absolute;right:-10px;top:40px;color:var(--accent);opacity:.35;font-size:.9rem;z-index:1}
 .ap-step:last-child::after{display:none}
-.ap-n{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--accent);margin-bottom:12px}
-.ap-t{font-size:.95rem;font-weight:700;letter-spacing:-.01em;margin-bottom:10px}
-.ap-d{font-size:.82rem;color:var(--text3);line-height:1.7}
+.ap-n{font-size:.65rem;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:10px}
+.ap-t{font-size:.9rem;font-weight:700;margin-bottom:8px}
+.ap-d{font-size:.8rem;color:var(--text3);line-height:1.7}
 
-/* ── BREAKTHROUGH ── */
-.breakthrough{background:linear-gradient(135deg,rgba(74,148,200,.06) 0%,rgba(200,160,96,.04) 100%);border:1px solid rgba(74,148,200,.15);border-radius:var(--radius);padding:72px 80px;position:relative;overflow:hidden}
-.breakthrough::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(74,148,200,.08),transparent 70%);pointer-events:none}
-.bt-tag{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(74,148,200,.7);margin-bottom:24px}
-.bt-quote{font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:700;line-height:1.4;letter-spacing:-.02em;color:var(--text1);margin-bottom:32px;max-width:720px}
-.bt-quote em{color:rgba(74,148,200,.9)}
-.bt-body{font-size:.95rem;color:var(--text2);line-height:1.9;max-width:680px}
+/* BREAKTHROUGH */
+.breakthrough{background:linear-gradient(135deg,rgba(74,140,200,.06) 0%,rgba(74,140,200,.02) 100%);border:1px solid rgba(74,140,200,.15);border-radius:var(--radius);padding:64px 72px;position:relative;overflow:hidden}
+.breakthrough::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(74,140,200,.07),transparent 70%);pointer-events:none}
+.bt-tag{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(74,140,200,.7);margin-bottom:20px}
+.bt-quote{font-size:clamp(1.2rem,2.5vw,1.75rem);font-weight:700;line-height:1.4;letter-spacing:-.02em;color:var(--text1);margin-bottom:28px;max-width:700px}
+.bt-quote em{color:rgba(74,140,200,.9)}
+.bt-body{font-size:.95rem;color:var(--text2);line-height:1.9;max-width:660px}
+.bt-body p{margin-bottom:14px}
 
-/* ── SYSTEM FLOW ── */
-.system-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:40px;position:relative}
-/* line sits at top:52px = padding-top(24px) + half circle height(28px), perfectly centred on circles */
-.system-flow::before{content:'';position:absolute;top:52px;left:calc(10% + 28px);right:calc(10% + 28px);height:1px;background:linear-gradient(90deg,rgba(200,160,96,.15),rgba(200,160,96,.45) 30%,rgba(200,160,96,.45) 70%,rgba(200,160,96,.15));pointer-events:none;z-index:0}
-.sf-step{display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 12px;text-align:center}
-.sf-n{width:56px;height:56px;border-radius:50%;border:1px solid var(--border2);background:var(--bg2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--accent);position:relative;z-index:1}
-.sf-t{font-size:.8rem;font-weight:600;letter-spacing:-.01em;margin-top:4px}
+/* SYSTEM FLOW */
+.system-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:36px;position:relative}
+.system-flow::before{content:'';position:absolute;top:52px;left:calc(10% + 28px);right:calc(10% + 28px);height:1px;background:linear-gradient(90deg,rgba(74,140,200,.1),rgba(74,140,200,.4) 30%,rgba(74,140,200,.4) 70%,rgba(74,140,200,.1));pointer-events:none;z-index:0}
+.sf-step{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 8px;text-align:center}
+.sf-n{width:56px;height:56px;border-radius:50%;border:1px solid var(--border2);background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--accent);position:relative;z-index:1}
+.sf-t{font-size:.82rem;font-weight:700;margin-top:4px}
 .sf-d{font-size:.72rem;color:var(--text3);line-height:1.6}
 
-/* ── UX INNOVATIONS ── */
-.ux-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
-.ux-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .3s}
+/* UX CARDS */
+.ux-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.ux-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .3s;cursor:pointer}
 .ux-card:hover{border-color:var(--border2)}
-.ux-card-frame{height:180px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.frame-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;height:100%}
-.frame-icon{width:36px;height:36px;border:1.5px dashed rgba(200,160,96,.3);border-radius:4px;display:flex;align-items:center;justify-content:center}
-.frame-icon svg{opacity:.4}
-.frame-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
-.ux-card-body{padding:20px}
-.ux-card-title{font-size:.88rem;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
-.ux-card-desc{font-size:.78rem;color:var(--text3);line-height:1.7}
+.ux-card-frame{height:200px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.locked-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(11,11,11,.7);backdrop-filter:blur(2px)}
+.locked-overlay svg{opacity:.5}
+.locked-overlay .lock-msg{font-size:.75rem;font-weight:500;color:var(--text3);text-align:center;line-height:1.6}
+.locked-overlay .lock-hint{font-size:.65rem;color:var(--accent);opacity:.7}
+.ux-card-body{padding:18px}
+.ux-card-title{font-size:.88rem;font-weight:700;margin-bottom:6px}
+.ux-card-desc{font-size:.8rem;color:var(--text3);line-height:1.7}
 
-/* ── KEY SCREENS ── */
-.screens-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
-.screen-frame{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.screen-frame.wide{grid-column:1/-1}
-.screen-vis{position:relative;background:var(--bg3)}
-.screen-vis.tall{height:360px}
-.screen-vis.short{height:240px}
-.screen-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
-.sp-border{width:80px;height:60px;border:1.5px dashed rgba(200,160,96,.2);border-radius:4px;display:flex;align-items:center;justify-content:center}
-.sp-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);text-align:center;line-height:1.8}
-.sp-hint{font-size:.65rem;color:rgba(200,160,96,.5);font-style:italic}
-.screen-caption{padding:16px 20px}
-.screen-caption-title{font-size:.85rem;font-weight:600;margin-bottom:4px}
-.screen-caption-desc{font-size:.75rem;color:var(--text3);line-height:1.6}
+/* NDA NOTE */
+.nda-note{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--text2);background:rgba(255,255,255,.03);border:1px solid var(--border2);border-left:3px solid rgba(74,140,200,.4);padding:14px 18px;border-radius:0 4px 4px 0;margin:16px 0;line-height:1.75}
 
-/* ── PROTOTYPE EMBED ── */
-.proto-block{background:var(--bg2);border:1px solid rgba(74,148,200,.2);border-radius:var(--radius);padding:48px;text-align:center;margin-top:40px;position:relative;overflow:hidden}
-.proto-block::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(74,148,200,.04),transparent 70%);pointer-events:none}
-.proto-tag{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(74,148,200,.6);margin-bottom:16px}
-.proto-h{font-size:1.1rem;font-weight:700;letter-spacing:-.02em;margin-bottom:10px}
-.proto-p{font-size:.85rem;color:var(--text3);line-height:1.7;max-width:400px;margin:0 auto}
-.proto-btn{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:12px 28px;border:1px solid rgba(74,148,200,.3);border-radius:2px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(74,148,200,.8);transition:all .25s}
-.proto-btn:hover{border-color:rgba(74,148,200,.6);background:rgba(74,148,200,.05)}
-
-/* ── IMPACT ── */
-.impact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:40px 0}
-.impact-item{background:var(--bg2);padding:40px 36px}
-.impact-stat{font-size:2.4rem;font-weight:800;letter-spacing:-.04em;color:var(--accent);margin-bottom:8px;line-height:1}
+/* IMPACT */
+.impact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:36px 0}
+.impact-item{background:var(--bg2);padding:36px 32px}
+.impact-stat{font-size:2.2rem;font-weight:800;letter-spacing:-.04em;color:var(--accent);margin-bottom:8px;line-height:1}
 .impact-desc{font-size:.85rem;color:var(--text2);line-height:1.7}
-.impact-biz{margin-top:40px;padding:36px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
-.impact-biz h3{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.impact-biz{margin-top:32px;padding:32px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
+.impact-biz-title{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+/* Business impact two-col table */
+.biz-table{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.biz-row{display:grid;grid-template-columns:2fr 3fr;border-bottom:1px solid var(--border)}
+.biz-row:last-child{border-bottom:none}
+.biz-row:hover{background:rgba(255,255,255,.02)}
+.biz-label{padding:16px 20px;font-size:.88rem;font-weight:600;color:var(--text1);border-right:1px solid var(--border)}
+.biz-desc{padding:16px 20px;font-size:.85rem;color:var(--text3);line-height:1.7}
 
-/* ── REFLECTION ── */
-.reflection-cols{display:grid;grid-template-columns:3fr 2fr;gap:64px;align-items:start}
-.strength-list{display:flex;flex-direction:column;gap:12px;margin-top:8px}
-.strength-item{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--bg2);border:1px solid var(--border);border-radius:4px}
-.strength-n{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--accent);flex-shrink:0;margin-top:1px}
-.strength-t{font-size:.85rem;line-height:1.6;color:var(--text2)}
-.next-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-.next-item{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text3);padding:12px}
+/* REFLECTION */
+.reflection-cols{display:grid;grid-template-columns:3fr 2fr;gap:56px;align-items:start}
+.strength-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.strength-item{display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--bg2);border:1px solid var(--border);border-radius:4px}
+.strength-n{font-size:.65rem;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:1px;min-width:20px}
+.strength-t{font-size:.85rem;line-height:1.65;color:var(--text2)}
+.next-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.next-item{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text3);padding:10px}
 .next-dot{width:6px;height:6px;border-radius:50%;border:1px solid var(--accent);flex-shrink:0}
+.conf-note{margin-top:24px;padding:20px;background:var(--bg3);border:1px solid var(--border);border-radius:4px}
+.conf-note-label{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.conf-note p{font-size:.8rem;color:var(--text3);line-height:1.75}
 
-/* ── NDA ── */
-.nda-note{display:flex;align-items:flex-start;gap:10px;font-size:.82rem;color:var(--text2);background:rgba(255,255,255,.03);border:1px solid var(--border2);border-left:3px solid rgba(200,160,96,.35);padding:14px 18px;border-radius:0 4px 4px 0;margin:16px 0;line-height:1.7}
-
-/* ── FOOTER ── */
-.cs-footer{padding:48px 80px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
-.footer-nav{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:8px;transition:gap .3s}
+/* FOOTER */
+.cs-footer{padding:40px 80px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+.footer-nav{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:8px;transition:gap .3s}
 .footer-nav:hover{gap:14px}
 .footer-copy{font-size:.8rem;color:var(--text3)}
 
-/* ── DIVIDER ── */
-.cs-divider{width:48px;height:2px;background:var(--accent);opacity:.4;margin:24px 0}
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
 
-/* ── RESPONSIVE ── */
+/* PASSWORD LOCK */
+.unlock-btn{position:fixed;bottom:32px;right:32px;z-index:200;display:flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg2);border:1px solid var(--border2);border-radius:24px;font-size:.78rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .3s;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.unlock-btn:hover{border-color:var(--accent);color:var(--accent)}
+.unlock-btn.unlocked{border-color:rgba(74,148,80,.5);color:rgba(74,148,80,.9);background:rgba(74,148,80,.06)}
+.password-modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(8px)}
+.password-modal.open{display:flex}
+.pm-box{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:40px;width:100%;max-width:400px;text-align:center}
+.pm-title{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.pm-sub{font-size:.85rem;color:var(--text3);margin-bottom:24px;line-height:1.7}
+.pm-input{width:100%;padding:12px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text1);font-size:.9rem;font-family:'Inter',sans-serif;outline:none;margin-bottom:12px}
+.pm-input:focus{border-color:var(--accent)}
+.pm-submit{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:.85rem;font-weight:600;cursor:pointer;transition:opacity .2s}
+.pm-submit:hover{opacity:.85}
+.pm-error{font-size:.78rem;color:rgba(200,72,72,.9);margin-top:8px;display:none}
+.pm-cancel{margin-top:12px;font-size:.75rem;color:var(--text3);cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif}
+.pm-cancel:hover{color:var(--text2)}
+
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:40px}
+#lightbox.open{display:flex}
+#lightbox img{max-width:100%;max-height:90vh;border-radius:4px;object-fit:contain}
+#lb-close{position:absolute;top:24px;right:24px;background:none;border:1px solid var(--border2);color:var(--text2);padding:8px 16px;border-radius:4px;cursor:pointer;font-size:.78rem;font-family:'Inter',sans-serif}
+
+/* RESPONSIVE */
 @media(max-width:900px){
-  nav{padding:16px 24px}
-  .cs-hero{padding:100px 24px 60px}
-  .cs-back-link{top:80px;left:24px}
-  .cs-hero-inner{grid-template-columns:1fr;gap:40px}
-  .cs-hero-visual{order:-1}
-  .cs-section,.cs-section-full{padding:64px 24px}
-  .two-col,.two-col-narrow,.role-grid,.ux-grid,.screens-grid,.impact-grid,.reflection-cols{grid-template-columns:1fr}
+  .cs-hero-wrap,.wrap{padding:0 24px}
+  .cs-hero{padding:100px 0 60px}
+  .cs-hero-inner,.two-col,.role-grid,.ux-grid,.impact-grid,.reflection-cols{grid-template-columns:1fr}
+  .cs-section-full{padding:64px 24px}
   .approach-steps{grid-template-columns:1fr 1fr}
   .ap-step::after{display:none}
   .system-flow{grid-template-columns:1fr 1fr}
   .system-flow::before{display:none}
-  .breakthrough{padding:40px 24px}
-  .cs-footer{flex-direction:column;gap:16px;padding:40px 24px}
-  .screens-grid .screen-frame.wide{grid-column:auto}
+  .breakthrough{padding:36px 24px}
+  .cs-footer{flex-direction:column;gap:16px;padding:32px 24px}
+  .unlock-btn{bottom:20px;right:20px}
+  .biz-row{grid-template-columns:1fr}
+  .biz-label{border-right:none;border-bottom:1px solid var(--border);padding-bottom:8px}
 }
 </style>
 </head>
 <body>
 
+<div id="progress-bar"></div>
+
+<!-- PASSWORD MODAL -->
+<div class="password-modal" id="passwordModal">
+  <div class="pm-box">
+    <div class="pm-title">🔒 Unlock Full Case Study</div>
+    <p class="pm-sub">This case study is under NDA. Enter the password to view all screens, prototypes, and UI artefacts.</p>
+    <input class="pm-input" type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPassword()">
+    <button class="pm-submit" onclick="checkPassword()">Unlock</button>
+    <div class="pm-error" id="pwError">Incorrect password. Try again.</div>
+    <button class="pm-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lb-close" onclick="closeLightbox()">Close ✕</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
 <!-- NAV -->
-<nav>
-  <span class="nav-logo">Mithun<span>.</span></span>
+<nav id="nav">
+  <a href="index.html" class="nav-logo">Mithun<span>.</span></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#projects-home" class="active">Projects</a>
+      <a href="index.html#illustrations">Illustrations</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <div class="theme-btn-thumb">
+        <svg class="thumb-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="thumb-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </div>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
 </nav>
 
-<!-- ══════════════════════════════════
-     SECTION 1 — HERO
-══════════════════════════════════ -->
+<div id="mob-menu">
+  <a href="index.html">Home</a>
+  <a href="index.html#projects-home">Projects</a>
+  <a href="index.html#illustrations">Illustrations</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#contact">Contact</a>
+  <div class="mob-toggle-row">
+    <span>Theme</span>
+    <button class="theme-btn" onclick="toggleTheme()">
+      <div class="theme-btn-thumb">
+        <svg class="thumb-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="thumb-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- HERO -->
 <div class="cs-hero">
   <div class="cs-hero-bg"></div>
   <div class="cs-hero-grid"></div>
-
-  <!-- Back link — sits in hero, top-left -->
-  <a href="index.html" class="cs-back-link">← All Projects</a>
-
-  <div class="cs-hero-inner">
-    <!-- Left: text content -->
-    <div class="cs-hero-text">
-      <div class="cs-eyebrow">Case Study · B2B SaaS · Enterprise · GovTech</div>
-      <h1 class="cs-title">Flyght <em>Cloud</em></h1>
-      <p class="cs-subtitle">Geospatial audit intelligence for government programs — designing a system that enables remote, evidence-based verification of millions of distributed assets.</p>
-
-      <div class="cs-meta-row">
-        <div class="cs-meta-item">
-          <span class="cs-meta-label">Role</span>
-          <span class="cs-meta-val">Lead Product Designer</span>
-        </div>
-        <div class="cs-meta-item">
-          <span class="cs-meta-label">Timeline</span>
-          <span class="cs-meta-val">2022 — Present</span>
-        </div>
-        <div class="cs-meta-item">
-          <span class="cs-meta-label">Domain</span>
-          <span class="cs-meta-val">GIS · ISR · Govt Audit</span>
-        </div>
-        <div class="cs-meta-item">
-          <span class="cs-meta-label">Platform</span>
-          <span class="cs-meta-val">Web SaaS · 3 Modules</span>
-        </div>
-        <div class="cs-meta-item">
-          <span class="cs-meta-label">Scope</span>
-          <span class="cs-meta-val">End-to-End · 0 → 1</span>
+  <div class="cs-hero-wrap">
+    <a href="index.html" class="cs-back-link">← All Projects</a>
+    <div class="cs-hero-inner">
+      <div>
+        <div class="cs-eyebrow">B2B SaaS · Web App · Enterprise · GovTech · Geospatial</div>
+        <h1 class="cs-title">Flyght <em>Cloud</em></h1>
+        <p class="cs-subtitle">A drone data processing platform built for enterprise and government use. I designed the end-to-end product across three modules: geospatial mapping, ISR surveillance, and government audit intelligence.</p>
+        <div class="cs-meta-row">
+          <div class="cs-meta-item"><span class="cs-meta-label">Role</span><span class="cs-meta-val">Lead Product Designer</span></div>
+          <div class="cs-meta-item"><span class="cs-meta-label">Timeline</span><span class="cs-meta-val">2022 — Present</span></div>
+          <div class="cs-meta-item"><span class="cs-meta-label">Domain</span><span class="cs-meta-val">GIS · ISR · Govt Audit</span></div>
+          <div class="cs-meta-item"><span class="cs-meta-label">Scope</span><span class="cs-meta-val">End-to-End · 0 → 1</span></div>
         </div>
       </div>
-    </div>
-
-    <!-- Right: hero image placeholder -->
-    <div class="cs-hero-visual">
-      <div class="hero-img-placeholder">
+      <div class="hero-img-placeholder locked-area" onclick="handleLockedClick()">
         <div class="hip-inner">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.35)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <div class="hip-label">Hero image</div>
-          <div class="hip-sub">Dashboard screenshot · Figma export · 1200×800px recommended</div>
+          <div class="locked-overlay" style="position:relative;background:none;backdrop-filter:none;gap:10px;display:flex;flex-direction:column;align-items:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.4)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <div class="lock-msg">Password protected<br>Click 'Unlock' to view</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     SECTION 2 — CONTEXT + PROBLEM
-══════════════════════════════════ -->
-<div style="max-width:1200px;margin:0 auto;width:100%">
-<div class="cs-section two-col-narrow">
+<!-- SECTION 2: CONTEXT -->
+<div style="background:var(--bg)">
+<div class="wrap"><div class="cs-section two-col reveal">
   <div>
     <div class="section-label">Context</div>
     <h2 class="section-title">Scale is not the challenge — <em>visibility</em> is.</h2>
     <div class="cs-divider"></div>
-    <p class="body-text">Government audit bodies are responsible for verifying whether public funds are correctly utilised across large-scale welfare and infrastructure programs. In schemes like housing development, <strong>millions of assets are distributed across vast geographies</strong> — making physical verification slow, resource-intensive, and often incomplete.</p>
-    <p class="body-text">Flyght Cloud is a geospatial intelligence platform that leverages drone-based mapping to create high-resolution digital representations of real-world environments. This project explores how such a system can <strong>transform audit from a physical process into a data-driven one</strong>.</p>
-
-    <div class="section-label" style="margin-top:48px">The Problem</div>
+    <p class="body-text">Central government audit bodies are responsible for verifying whether public funds are correctly utilised across large-scale welfare and infrastructure programs. In schemes like <strong>PMAY (Pradhan Mantri Awas Yojana — the Prime Minister of India's flagship housing development initiative)</strong>, millions of assets are distributed across vast geographies — making physical verification slow, resource-intensive, and often incomplete.</p>
+    <p class="body-text">Flyght Cloud is a geospatial intelligence platform that leverages drone-based mapping to create high-resolution digital representations of real-world environments <strong>(digital twin)</strong>. This project explores how such a system can <strong>transform audit from a physical process into a data-driven one</strong>.</p>
+    <div class="section-label" style="margin-top:40px">The Problem</div>
     <ul class="cs-bullets">
       <li>Assets are geographically dispersed — physical verification doesn't scale</li>
       <li>Verification depends heavily on field visits that are slow and expensive</li>
@@ -289,45 +331,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:fl
       <li>Only a small subset of cases can ever be verified manually</li>
     </ul>
   </div>
-
-  <!-- Scale visual -->
   <div class="scale-visual">
-    <div class="section-label" style="margin-bottom:20px">Audit coverage gap</div>
+    <div class="section-label" style="margin-bottom:18px">Audit coverage gap</div>
     <div class="scale-bar-row">
       <span class="scale-bar-label">Assets</span>
-      <div class="scale-bar" style="width:100%;height:8px;opacity:.8"></div>
+      <div style="flex:1;position:relative;height:8px;background:var(--border2);border-radius:4px"><div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--accent),rgba(74,148,200,.5));border-radius:4px"></div></div>
     </div>
-    <div class="scale-bar-row">
+    <div class="scale-bar-row" style="margin-top:10px">
       <span class="scale-bar-label">Verified</span>
-      <div class="scale-bar" style="width:18%;background:linear-gradient(90deg,var(--accent),#c8a060cc)"></div>
-      <div class="scale-bar full" style="flex:1;margin:0"></div>
+      <div style="flex:1;position:relative;height:8px;background:var(--border2);border-radius:4px"><div style="position:absolute;left:0;top:0;bottom:0;width:18%;background:linear-gradient(90deg,var(--accent),rgba(200,160,96,.5));border-radius:4px"></div></div>
     </div>
-    <div class="scale-bar-row">
+    <div class="scale-bar-row" style="margin-top:10px">
       <span class="scale-bar-label">Flagged</span>
-      <div class="scale-bar" style="width:8%;background:linear-gradient(90deg,rgba(200,80,80,.7),rgba(200,80,80,.3))"></div>
-      <div class="scale-bar full" style="flex:1;margin:0"></div>
+      <div style="flex:1;position:relative;height:8px;background:var(--border2);border-radius:4px"><div style="position:absolute;left:0;top:0;bottom:0;width:8%;background:linear-gradient(90deg,rgba(200,72,72,.7),rgba(200,72,72,.3));border-radius:4px"></div></div>
     </div>
     <div class="scale-caption">Before Flyght Cloud · Manual audit at scale · Most assets never verified</div>
-
-    <div style="margin-top:28px;padding:20px;background:rgba(74,148,200,.05);border:1px solid rgba(74,148,200,.12);border-radius:4px">
-      <div style="font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(74,148,200,.6);margin-bottom:10px">The opportunity</div>
+    <div style="margin-top:20px;padding:16px;background:rgba(74,140,200,.05);border:1px solid rgba(74,140,200,.12);border-radius:4px">
+      <div class="section-label" style="color:rgba(74,140,200,.7);margin-bottom:8px">The opportunity</div>
       <p style="font-size:.82rem;color:var(--text2);line-height:1.75">By introducing a spatial, intelligence-driven system, auditors can verify assets remotely, identify discrepancies faster, prioritise high-risk cases, and make decisions using visual evidence.</p>
     </div>
   </div>
-</div>
+</div></div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     SECTION 3 — MY ROLE + CHALLENGES
-══════════════════════════════════ -->
+<!-- SECTION 3: ROLE -->
 <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-<div style="max-width:1200px;margin:0 auto;width:100%">
-<div class="cs-section">
+<div class="wrap"><div class="cs-section reveal">
   <div class="section-label">My Role</div>
   <h2 class="section-title">Beyond UI — <em>system thinking</em> and product strategy.</h2>
-  <p class="body-text" style="max-width:680px">I was responsible for shaping how this system would be understood, used, and trusted — from structuring an ambiguous problem into a clear product direction, all the way to presenting the solution to senior government stakeholders.</p>
-
+  <p class="body-text" style="max-width:640px">I was responsible for shaping how this system would be understood, used, and trusted — from structuring an ambiguous problem into a clear product direction, all the way to presenting the solution to senior government stakeholders.</p>
   <div class="role-grid">
     <div class="role-card">
       <h3>Contributions</h3>
@@ -336,397 +368,155 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:fl
         <li>Designed end-to-end workflows for auditors and analysts</li>
         <li>Defined the interaction model for a map-based audit system</li>
         <li>Collaborated with sales, product, and engineering teams</li>
-        <li>Presented solution to senior government stakeholders</li>
+        <li>Presented solution to senior central government stakeholders</li>
         <li>Iterated based on real-world client feedback</li>
       </ul>
     </div>
     <div class="role-card">
       <h3>Key Challenges</h3>
       <ul class="cs-bullets">
-        <li>No existing benchmark for a geospatial audit interface</li>
-        <li>Complex backend logic requiring simple user interaction</li>
+        <li>No existing benchmark — this system didn't exist at this scale</li>
+        <li>Complex backend logic requiring simple, trustworthy user interaction</li>
         <li>Multiple stakeholders with fundamentally different expectations</li>
         <li>High time pressure driven by live sales requirements</li>
         <li>Communicating system value clearly in early-stage client discussions</li>
       </ul>
     </div>
   </div>
-</div>
-</div>
+</div></div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     SECTION 4 — APPROACH
-══════════════════════════════════ -->
-<div style="max-width:1200px;margin:0 auto;width:100%">
-<div class="cs-section">
+<!-- SECTION 4: APPROACH -->
+<div style="background:var(--bg)">
+<div class="wrap"><div class="cs-section reveal">
   <div class="section-label">Approach</div>
   <h2 class="section-title">Four phases. One coherent system.</h2>
-  <p class="body-text" style="max-width:620px">The process wasn't linear — it was adaptive. Each phase informed the next, and feedback loops between phases were constant. This is how complex systems get designed well.</p>
-
+  <p class="body-text" style="max-width:600px">The process was adaptive — each phase informed the next, and feedback loops were constant. This is how complex systems get designed well.</p>
   <div class="approach-steps">
-    <div class="ap-step">
-      <div class="ap-n">01</div>
-      <div class="ap-t">Ecosystem Mapping</div>
-      <div class="ap-d">Understood how audit workflows operate in real-world scenarios — who does what, where the friction lives, what actually matters</div>
-    </div>
-    <div class="ap-step">
-      <div class="ap-n">02</div>
-      <div class="ap-t">Problem Structuring</div>
-      <div class="ap-d">Broke the system into three distinct layers: data ingestion, verification logic, and auditor workflows — each with its own design requirements</div>
-    </div>
-    <div class="ap-step">
-      <div class="ap-n">03</div>
-      <div class="ap-t">Rapid Prototyping</div>
-      <div class="ap-d">Shifted from static mockups to interactive click-through prototypes early — simulation beats explanation every time</div>
-    </div>
-    <div class="ap-step">
-      <div class="ap-n">04</div>
-      <div class="ap-t">Continuous Iteration</div>
-      <div class="ap-d">Refined through internal reviews and direct client feedback — design decisions were grounded in real reactions, not assumptions</div>
-    </div>
+    <div class="ap-step"><div class="ap-n">01</div><div class="ap-t">Ecosystem Mapping</div><div class="ap-d">Understood how audit workflows operate in real-world scenarios — who does what, where friction lives, what actually matters</div></div>
+    <div class="ap-step"><div class="ap-n">02</div><div class="ap-t">Problem Structuring</div><div class="ap-d">Broke the system into three layers: data ingestion, verification logic, and auditor workflows — each with distinct design requirements</div></div>
+    <div class="ap-step"><div class="ap-n">03</div><div class="ap-t">Rapid Prototyping</div><div class="ap-d">Shifted from static mockups to interactive Figma prototypes early — simulation beats explanation every time</div></div>
+    <div class="ap-step"><div class="ap-n">04</div><div class="ap-t">Continuous Iteration</div><div class="ap-d">Refined through internal reviews and direct client feedback — decisions were grounded in real reactions, not assumptions</div></div>
   </div>
-
-  <!-- Placeholder for process artefacts / journey map -->
-  <div class="screen-frame" style="margin-top:48px">
-    <div class="screen-vis short">
-      <div class="screen-placeholder">
-        <div class="sp-border">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
-        </div>
-        <div class="sp-label">User journey map / flow diagram<br>Figma frame</div>
-        <div class="sp-hint">Drop Figma frame or export here</div>
-      </div>
-    </div>
-    <div class="screen-caption">
-      <div class="screen-caption-title">Audit Ecosystem Map</div>
-      <div class="screen-caption-desc">End-to-end workflow mapping showing all actors, touchpoints, and data flows across the audit system</div>
-    </div>
+  <div style="margin-top:36px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px" class="locked-area" onclick="handleLockedClick()">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.35)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    <div style="font-size:.78rem;font-weight:500;color:var(--text3)">Password protected — click 'Unlock' to view</div>
+    <div style="font-size:.68rem;color:var(--accent);opacity:.6">User journey map / flow diagram</div>
   </div>
-</div>
+</div></div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     SECTION 5 — BREAKTHROUGH MOMENT
-══════════════════════════════════ -->
-<div class="cs-section-full" style="background:var(--bg)">
-<div style="max-width:1000px;margin:0 auto">
-  <div class="breakthrough">
-    <div class="bt-tag">★ Breakthrough Moment</div>
-    <div class="bt-quote">
-      "When the interactive prototype was introduced, the dynamic shifted <em>immediately</em>. The client moved closer, began interacting with the interface, and started exploring the system in real time."
-    </div>
+<!-- SECTION 5: BREAKTHROUGH -->
+<div class="cs-section-full" style="background:var(--bg2);border-top:1px solid var(--border)">
+<div style="max-width:960px;margin:0 auto">
+  <div class="breakthrough reveal">
+    <div class="bt-tag">★ Breakthrough Moment in a Sales Call</div>
+    <div class="bt-quote">"When the interactive Figma prototype was introduced, the dynamic of the sales call shifted <em>immediately</em>. The client moved closer, began interacting with the interface, and started exploring the system in real time."</div>
     <div class="bt-body">
-      <p style="margin-bottom:16px">Context matters here: this was an <strong style="color:var(--text1)">early-stage sales presentation — well before any purchase order or contract</strong>. The client institution hadn't committed. The deal was live but uncertain. This was the moment that could either build conviction or lose the room.</p>
-      <p style="margin-bottom:16px">The initial walkthrough using slides struggled to hold attention. A complex geospatial audit system explained through bullet points remained abstract — something to be evaluated in theory rather than trusted in practice.</p>
-      <p style="margin-bottom:16px">When I introduced the interactive Figma prototype, the room changed. What was previously being <em>explained</em> became directly <em>experienced</em>. The client began navigating flows, asking "what if" questions, probing edge cases — exactly the kind of engagement that builds trust in a system before you've signed anything.</p>
-      <p><strong style="color:var(--text1)">The prototype didn't close the deal — it made the deal possible.</strong> Design became the commercial accelerant: it compressed months of abstract sales conversations into a single session of direct interaction. That's what a high-fidelity prototype can do when it's built with enough fidelity to feel real.</p>
+      <p>This was an <strong>early-stage sales presentation — well before any purchase order or contract</strong>. The client institution hadn't committed. The deal was live but uncertain. This was the moment that could either build conviction or lose the room.</p>
+      <p>The initial walkthrough using slides struggled to hold attention. A complex geospatial audit system explained through bullet points remained abstract — something to be evaluated in theory rather than trusted in practice.</p>
+      <p>When I introduced the interactive Figma prototype, the room changed. What was previously being <em>explained</em> became directly <em>experienced</em>. The client began navigating flows, asking "what if" questions, probing edge cases — exactly the kind of engagement that builds trust in a system before you've signed anything.</p>
+      <p><strong>The prototype didn't close the deal — it made the deal possible.</strong> Design became the commercial accelerant: it compressed months of abstract sales conversations into a single session of direct interaction.</p>
     </div>
   </div>
 </div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     SECTION 6 — SOLUTION OVERVIEW
-══════════════════════════════════ -->
-<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-<div style="max-width:1200px;margin:0 auto;width:100%">
-<div class="cs-section">
+<!-- SECTION 6: SOLUTION -->
+<div style="background:var(--bg)">
+<div class="wrap"><div class="cs-section reveal">
   <div class="section-label">Solution Overview</div>
   <h2 class="section-title">From raw data to <em>audit-ready decisions</em>.</h2>
-  <p class="body-text" style="max-width:640px">The system transforms fragmented data into a spatial, decision-ready interface. Every step of the pipeline was designed to reduce cognitive load — the right information, at the right moment, for the right user.</p>
-
+  <p class="body-text" style="max-width:620px">The system transforms fragmented data into a spatial, decision-ready interface. Every step of the pipeline was designed to reduce cognitive load — the right information, at the right moment, for the right user.</p>
   <div class="system-flow">
-    <div class="sf-step">
-      <div class="sf-n">01</div>
-      <div class="sf-t">Data Upload</div>
-      <div class="sf-d">Beneficiary data ingested into the system</div>
-    </div>
-    <div class="sf-step">
-      <div class="sf-n">02</div>
-      <div class="sf-t">Drone Survey</div>
-      <div class="sf-d">2D ortho + 3D models generated from flight data</div>
-    </div>
-    <div class="sf-step">
-      <div class="sf-n">03</div>
-      <div class="sf-t">Comparison</div>
-      <div class="sf-d">Claimed vs observed construction stages cross-referenced</div>
-    </div>
-    <div class="sf-step">
-      <div class="sf-n">04</div>
-      <div class="sf-t">Visualisation</div>
-      <div class="sf-d">Assets mapped spatially — explore, filter, prioritise</div>
-    </div>
-    <div class="sf-step">
-      <div class="sf-n">05</div>
-      <div class="sf-t">Audit Decision</div>
-      <div class="sf-d">Auditors investigate, annotate, and record final judgments</div>
-    </div>
+    <div class="sf-step"><div class="sf-n">01</div><div class="sf-t">Data Upload</div><div class="sf-d">Beneficiary data ingested into the system</div></div>
+    <div class="sf-step"><div class="sf-n">02</div><div class="sf-t">Drone Survey</div><div class="sf-d">2D ortho + 3D models generated from flight data</div></div>
+    <div class="sf-step"><div class="sf-n">03</div><div class="sf-t">Comparison</div><div class="sf-d">Claimed vs observed construction stages cross-referenced</div></div>
+    <div class="sf-step"><div class="sf-n">04</div><div class="sf-t">Visualisation</div><div class="sf-d">Assets mapped spatially — explore, filter, prioritise</div></div>
+    <div class="sf-step"><div class="sf-n">05</div><div class="sf-t">Audit Decision</div><div class="sf-d">Auditors investigate, annotate, and record final judgments</div></div>
   </div>
-
-  <!-- System diagram placeholder -->
-  <div class="screen-frame" style="margin-top:40px">
-    <div class="screen-vis tall">
-      <div class="screen-placeholder">
-        <div class="sp-border">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.4)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </div>
-        <div class="sp-label">System architecture / solution overview<br>Figma frame or screen recording</div>
-        <div class="sp-hint">Recommended: Full-width Figma frame of the main dashboard</div>
-      </div>
-    </div>
-    <div class="screen-caption">
-      <div class="screen-caption-title">Audit Dashboard — Main View</div>
-      <div class="screen-caption-desc">Map-first interface showing all assets, classification status, and quick-access audit controls in a single view</div>
-    </div>
+  <div style="margin-top:32px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);height:280px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px" class="locked-area" onclick="handleLockedClick()">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.35)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    <div style="font-size:.78rem;font-weight:500;color:var(--text3)">Password protected — click 'Unlock' to view</div>
+    <div style="font-size:.68rem;color:var(--accent);opacity:.6">Main audit dashboard · Full screen</div>
   </div>
-</div>
-</div>
+</div></div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     SECTION 7 — UX INNOVATIONS
-══════════════════════════════════ -->
-<div style="max-width:1200px;margin:0 auto;width:100%">
-<div class="cs-section">
+<!-- SECTION 7: UX INNOVATIONS -->
+<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+<div class="wrap"><div class="cs-section reveal">
   <div class="section-label">Key UX Innovations</div>
   <h2 class="section-title">Simplifying complex system logic into <em>intuitive interactions</em>.</h2>
-  <p class="body-text" style="max-width:640px">Each design decision was made to reduce the cognitive cost of auditing at scale. Every feature below solved a real problem identified through research — nothing was added for aesthetics alone.</p>
-
+  <p class="body-text" style="max-width:620px">Each design decision solved a real problem identified through research. Nothing was added for aesthetics alone.</p>
   <div class="ux-grid">
-
-    <div class="ux-card">
-      <div class="ux-card-frame">
-        <div class="frame-placeholder">
-          <div class="frame-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.5)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20"/></svg></div>
-          <div class="frame-label">Map interface<br>Figma frame</div>
-        </div>
-      </div>
-      <div class="ux-card-body">
-        <div class="ux-card-title">Map as Primary Interface</div>
-        <div class="ux-card-desc">Each asset is represented spatially — replacing traditional tabular views with the geographic context that actually matters to auditors. You see where problems cluster.</div>
-      </div>
+    <div class="ux-card locked-area" onclick="handleLockedClick()">
+      <div class="ux-card-frame"><div class="locked-overlay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.4)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div class="lock-msg">Password protected<br>Click 'Unlock' to view</div></div></div>
+      <div class="ux-card-body"><div class="ux-card-title">Map as Primary Interface</div><div class="ux-card-desc">Each asset represented spatially — replacing tabular views with geographic context that actually matters to auditors.</div></div>
     </div>
-
-    <div class="ux-card">
-      <div class="ux-card-frame">
-        <div class="frame-placeholder">
-          <div class="frame-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.5)" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div>
-          <div class="frame-label">Classification system<br>Figma frame</div>
-        </div>
-      </div>
-      <div class="ux-card-body">
-        <div class="ux-card-title">System-Led Classification</div>
-        <div class="ux-card-desc">Assets are pre-classified as Match, Discrepancy, or Not Verifiable — reducing cognitive load by letting the system triage, so auditors focus on judgment, not sorting.</div>
-      </div>
+    <div class="ux-card locked-area" onclick="handleLockedClick()">
+      <div class="ux-card-frame"><div class="locked-overlay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.4)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div class="lock-msg">Password protected<br>Click 'Unlock' to view</div></div></div>
+      <div class="ux-card-body"><div class="ux-card-title">System-Led Classification</div><div class="ux-card-desc">Assets pre-classified as Match, Discrepancy, or Not Verifiable — system triages so auditors focus on judgment, not sorting.</div></div>
     </div>
-
-    <div class="ux-card">
-      <div class="ux-card-frame">
-        <div class="frame-placeholder">
-          <div class="frame-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.5)" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="frame-label">Hover / disclosure interaction<br>Figma frame</div>
-        </div>
-      </div>
-      <div class="ux-card-body">
-        <div class="ux-card-title">Progressive Disclosure</div>
-        <div class="ux-card-desc">Hover-based interactions reveal key details instantly — keeping the map clean by default while making rich metadata immediately accessible when needed.</div>
-      </div>
+    <div class="ux-card locked-area" onclick="handleLockedClick()">
+      <div class="ux-card-frame"><div class="locked-overlay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.4)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div class="lock-msg">Password protected<br>Click 'Unlock' to view</div></div></div>
+      <div class="ux-card-body"><div class="ux-card-title">Progressive Disclosure</div><div class="ux-card-desc">Hover-based interactions reveal key details — map stays clean by default, rich metadata accessible instantly when needed.</div></div>
     </div>
-
-    <div class="ux-card">
-      <div class="ux-card-frame">
-        <div class="frame-placeholder">
-          <div class="frame-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.5)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <div class="frame-label">Audit workspace<br>Figma frame</div>
-        </div>
-      </div>
-      <div class="ux-card-body">
-        <div class="ux-card-title">Evidence-Centric Workspace</div>
-        <div class="ux-card-desc">All relevant data — maps, drone imagery, and audit observations — are accessible in one place. No switching between tools, no lost context, no transcription errors.</div>
-      </div>
+    <div class="ux-card locked-area" onclick="handleLockedClick()">
+      <div class="ux-card-frame"><div class="locked-overlay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.4)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div class="lock-msg">Password protected<br>Click 'Unlock' to view</div></div></div>
+      <div class="ux-card-body"><div class="ux-card-title">Evidence-Centric Workspace</div><div class="ux-card-desc">Maps, drone imagery, and audit observations accessible in one place — no switching tools, no lost context.</div></div>
     </div>
-
-    <div class="ux-card" style="grid-column:span 2">
-      <div style="display:grid;grid-template-columns:1fr 1fr;height:100%;min-height:280px">
-        <div class="ux-card-frame" style="height:auto;min-height:180px;border-bottom:none;border-right:1px solid var(--border)">
-          <div class="frame-placeholder">
-            <div class="frame-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.5)" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-            <div class="frame-label">Decision flow<br>Figma frame</div>
-          </div>
-        </div>
-        <div class="ux-card-body" style="padding:28px;display:flex;flex-direction:column;justify-content:center">
-          <div class="ux-card-title" style="font-size:.95rem">Structured Decision Flow</div>
-          <div class="ux-card-desc" style="font-size:.82rem">The system guides users from initial exploration through evidence review to final audit judgment — a clear path that prevents incomplete audits and ensures consistent outcomes across the team.</div>
-        </div>
-      </div>
+    <div class="ux-card locked-area" onclick="handleLockedClick()">
+      <div class="ux-card-frame"><div class="locked-overlay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.4)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div class="lock-msg">Password protected<br>Click 'Unlock' to view</div></div></div>
+      <div class="ux-card-body"><div class="ux-card-title">Structured Decision Flow</div><div class="ux-card-desc">Guides users from exploration through evidence review to final audit judgment — prevents incomplete audits, ensures consistent outcomes.</div></div>
     </div>
-
+    <div class="ux-card locked-area" onclick="handleLockedClick()">
+      <div class="ux-card-frame"><div class="locked-overlay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(74,140,200,.4)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div class="lock-msg">Password protected<br>Click 'Unlock' to view</div></div></div>
+      <div class="ux-card-body"><div class="ux-card-title">Interactive Figma Prototype</div><div class="ux-card-desc">The prototype that moved a central government deal forward — built with enough fidelity to feel real in a live client presentation.</div></div>
+    </div>
   </div>
-</div>
-</div>
-
-
-<!-- ══════════════════════════════════
-     SECTION 8 — KEY SCREENS
-══════════════════════════════════ -->
-<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-<div style="max-width:1200px;margin:0 auto;width:100%">
-<div class="cs-section">
-  <div class="section-label">Key Screens</div>
-  <h2 class="section-title">The interfaces that <em>made it real</em>.</h2>
-  <div class="nda-note">
-    <svg style="flex-shrink:0;margin-top:3px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.6)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-    <span><strong style="color:var(--text1);font-weight:600">NDA — UI screens redacted.</strong> This project is under a non-disclosure agreement with a central government institution in India. Process artefacts including research synthesis, flow diagrams, and wireframes are available on request.</span>
-  </div>
-
-  <!-- Prototype embed placeholder -->
-  <div class="proto-block">
-    <div class="proto-tag">▶ Interactive Prototype</div>
-    <div class="proto-h">Figma Prototype Embed</div>
-    <p class="proto-p">The interactive prototype — the exact one that moved the client deal forward — can be embedded here. Add your Figma embed URL below.</p>
-    <a href="#" class="proto-btn">↗ View Prototype</a>
-  </div>
-
-  <div class="screens-grid" style="margin-top:40px">
-
-    <div class="screen-frame wide">
-      <div class="screen-vis tall">
-        <div class="screen-placeholder">
-          <div class="sp-border"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.4)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-          <div class="sp-label">Main audit dashboard — full screen<br>Recommended: 1440×900 Figma frame</div>
-          <div class="sp-hint">Hero screen — make it large</div>
-        </div>
-      </div>
-      <div class="screen-caption">
-        <div class="screen-caption-title">Audit Dashboard</div>
-        <div class="screen-caption-desc">Map-first view with asset overlay, classification filters, and quick-action panel. Designed to surface the highest-priority discrepancies immediately on load.</div>
-      </div>
-    </div>
-
-    <div class="screen-frame">
-      <div class="screen-vis short">
-        <div class="screen-placeholder">
-          <div class="sp-border"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.4)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-          <div class="sp-label">Asset detail panel<br>Figma frame</div>
-        </div>
-      </div>
-      <div class="screen-caption">
-        <div class="screen-caption-title">Asset Detail & Evidence View</div>
-        <div class="screen-caption-desc">Drone imagery, claimed data, and audit workspace side-by-side for a single asset</div>
-      </div>
-    </div>
-
-    <div class="screen-frame">
-      <div class="screen-vis short">
-        <div class="screen-placeholder">
-          <div class="sp-border"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.4)" stroke-width="1.5"><path d="M9 12l2 2 4-4M22 12A10 10 0 1112 2a10 10 0 0110 10z"/></svg></div>
-          <div class="sp-label">Classification + decision flow<br>Figma frame</div>
-        </div>
-      </div>
-      <div class="screen-caption">
-        <div class="screen-caption-title">Structured Audit Decision</div>
-        <div class="screen-caption-desc">Guided flow from discrepancy review → evidence capture → final audit judgment with mandatory fields</div>
-      </div>
-    </div>
-
-    <div class="screen-frame wide">
-      <div class="screen-vis short">
-        <div class="screen-placeholder">
-          <div class="sp-border"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(200,160,96,.4)" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <div class="sp-label">Analytics / reporting view<br>Figma frame or prototype recording</div>
-          <div class="sp-hint">Optional: screen recording works well here</div>
-        </div>
-      </div>
-      <div class="screen-caption">
-        <div class="screen-caption-title">Audit Progress & Reporting</div>
-        <div class="screen-caption-desc">Summary view for audit managers — completion rates, discrepancy distribution, and exportable reports</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-</div>
+</div></div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     SECTION 9 — IMPACT
-══════════════════════════════════ -->
-<div style="max-width:1200px;margin:0 auto;width:100%">
-<div class="cs-section">
+<!-- SECTION 8: IMPACT -->
+<div style="background:var(--bg)">
+<div class="wrap"><div class="cs-section reveal">
   <div class="section-label">Impact</div>
   <h2 class="section-title">The system fundamentally changes the <em>economics of verification</em>.</h2>
-
   <div class="impact-grid">
-    <div class="impact-item">
-      <div class="impact-stat">Remote</div>
-      <div class="impact-desc">Enabled remote verification of distributed assets — auditors no longer need to travel to every site. Scale becomes tractable.</div>
-    </div>
-    <div class="impact-item">
-      <div class="impact-stat">↓ Physical</div>
-      <div class="impact-desc">Significantly reduced reliance on physical field inspections — cutting cost, time, and logistical complexity per audit cycle.</div>
-    </div>
-    <div class="impact-item">
-      <div class="impact-stat">Clarity</div>
-      <div class="impact-desc">Improved discrepancy identification through spatial comparison — patterns that were invisible in tabular data become immediately visible on the map.</div>
-    </div>
-    <div class="impact-item">
-      <div class="impact-stat">↑ Speed</div>
-      <div class="impact-desc">Accelerated audit workflows end-to-end — from data ingestion to final audit decision — compressing what previously took weeks into days.</div>
-    </div>
+    <div class="impact-item"><div class="impact-stat">Remote</div><div class="impact-desc">Enabled remote verification of distributed assets — auditors no longer need to travel to every site. Scale becomes tractable.</div></div>
+    <div class="impact-item"><div class="impact-stat">↓ Physical</div><div class="impact-desc">Significantly reduced reliance on physical field inspections — cutting cost, time, and logistical complexity per audit cycle.</div></div>
+    <div class="impact-item"><div class="impact-stat">Clarity</div><div class="impact-desc">Improved discrepancy identification through spatial comparison — patterns invisible in tabular data become immediately visible on the map.</div></div>
+    <div class="impact-item"><div class="impact-stat">↑ Speed</div><div class="impact-desc">Accelerated audit workflows end-to-end — compressing what previously took weeks into days.</div></div>
   </div>
-
   <div class="impact-biz">
-    <h3>Business Impact</h3>
-    <ul class="cs-bullets">
-      <li><strong>Strengthened client confidence</strong> during early-stage discussions — the prototype gave the sales team a concrete, interactive vision to close with</li>
-      <li><strong>Helped communicate a complex system effectively</strong> — design translated ambiguous backend logic into something clients could understand and trust immediately</li>
-      <li><strong>Accelerated a central government deal</strong> — the interactive prototype was the pivotal moment in a high-stakes client presentation</li>
-      <li><strong>Supported expansion into additional use cases</strong> — the modular architecture opened doors beyond the initial audit scope</li>
-    </ul>
+    <div class="impact-biz-title">Business Impact</div>
+    <div class="biz-table">
+      <div class="biz-row"><div class="biz-label">Strengthened client confidence</div><div class="biz-desc">During early-stage discussions — the interactive Figma prototype gave the sales team a concrete, interactive vision to close with</div></div>
+      <div class="biz-row"><div class="biz-label">Communicated a complex system</div><div class="biz-desc">Design translated ambiguous backend logic into something clients could understand and trust immediately</div></div>
+      <div class="biz-row"><div class="biz-label">Accelerated a central government deal</div><div class="biz-desc">The interactive Figma prototype was the pivotal moment in a high-stakes pre-sale client presentation</div></div>
+      <div class="biz-row"><div class="biz-label">Supported expansion</div><div class="biz-desc">The modular architecture opened doors beyond the initial audit scope into additional use cases</div></div>
+    </div>
   </div>
-</div>
+</div></div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     SECTION 10 — REFLECTION
-══════════════════════════════════ -->
+<!-- SECTION 9: REFLECTION -->
 <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-<div style="max-width:1200px;margin:0 auto;width:100%">
-<div class="cs-section">
+<div class="wrap"><div class="cs-section reveal">
   <div class="section-label">Reflection</div>
   <h2 class="section-title">From interface design to <em>system-level thinking</em>.</h2>
-  <p class="body-text" style="max-width:640px;margin-bottom:48px">This project marked a genuine transition in how I operate as a designer. The problems I was solving weren't UI problems — they were product problems. And solving them required operating well beyond the boundaries of a design brief.</p>
-
+  <p class="body-text" style="max-width:640px;margin-bottom:40px">This project marked a genuine transition in how I operate as a designer. The problems I was solving weren't UI problems — they were product problems. And solving them required operating well beyond the boundaries of a design brief.</p>
   <div class="reflection-cols">
     <div>
       <div class="section-label">What this project strengthened</div>
       <div class="strength-list">
-        <div class="strength-item">
-          <span class="strength-n">01</span>
-          <span class="strength-t"><strong>Working with ambiguity.</strong> No benchmark exists for geospatial audit interfaces. I had to define the problem space before I could design into it.</span>
-        </div>
-        <div class="strength-item">
-          <span class="strength-n">02</span>
-          <span class="strength-t"><strong>Thinking at scale.</strong> Designing for millions of assets forced me to think about information architecture and progressive disclosure in ways that card-level UX doesn't require.</span>
-        </div>
-        <div class="strength-item">
-          <span class="strength-n">03</span>
-          <span class="strength-t"><strong>Aligning stakeholders.</strong> Government stakeholders, internal sales, product, and engineering — each with different success criteria. Holding the design vision across all of them was its own design challenge.</span>
-        </div>
-        <div class="strength-item">
-          <span class="strength-n">04</span>
-          <span class="strength-t"><strong>Design as a commercial lever.</strong> The prototype didn't just communicate the design — it moved a deal forward. That relationship between design quality and business outcome is now central to how I think about my work.</span>
-        </div>
+        <div class="strength-item"><span class="strength-n">01</span><span class="strength-t"><strong>Building something that didn't exist.</strong> There was no existing benchmark for a geospatial audit interface operating at national scale, across millions of distributed government assets. I had to define what good looked like from scratch — first of its kind.</span></div>
+        <div class="strength-item"><span class="strength-n">02</span><span class="strength-t"><strong>Working with ambiguity.</strong> No precedent, no reference point. I had to define the problem space before I could design into it — and keep the team aligned through that uncertainty.</span></div>
+        <div class="strength-item"><span class="strength-n">03</span><span class="strength-t"><strong>Thinking at scale.</strong> Designing for millions of assets forced me to think about information architecture and progressive disclosure in ways that card-level UX doesn't require.</span></div>
+        <div class="strength-item"><span class="strength-n">04</span><span class="strength-t"><strong>Design as a commercial lever.</strong> The prototype didn't just communicate the design — it moved a deal forward. That relationship between design quality and business outcome is now central to how I think about my work.</span></div>
       </div>
     </div>
-
     <div>
       <div class="section-label">What's next</div>
       <div class="next-list">
@@ -735,17 +525,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:fl
         <div class="next-item"><div class="next-dot"></div>Automated evidence generation to reduce manual capture</div>
         <div class="next-item"><div class="next-dot"></div>Expansion to additional government scheme types</div>
       </div>
-
-      <div style="margin-top:32px;padding:24px;background:var(--bg3);border:1px solid var(--border);border-radius:4px">
-        <div style="font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:12px">Note</div>
-        <p style="font-size:.8rem;color:var(--text3);line-height:1.75">Some details have been abstracted due to client confidentiality. Process artefacts — research synthesis, flow diagrams, wireframes, and high-fidelity prototypes — are available on request.</p>
+      <div class="conf-note">
+        <div class="conf-note-label">Confidentiality Note</div>
+        <p>This project is under NDA with a central government institution in India. Process artefacts — research synthesis, flow diagrams, wireframes, and the interactive Figma prototype — are available on request via the password unlock above.</p>
       </div>
     </div>
   </div>
+</div></div>
 </div>
-</div>
-</div>
-
 
 <!-- FOOTER -->
 <div class="cs-footer">
@@ -753,5 +540,81 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:fl
   <a href="index.html" class="footer-nav">← All Projects</a>
 </div>
 
+<!-- FLOATING UNLOCK BUTTON -->
+<button class="unlock-btn" id="unlockBtn" onclick="openModal()">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+  Unlock Full Case Study
+</button>
+
+<script>
+// Theme
+const root = document.documentElement;
+root.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+function toggleTheme(){
+  const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', t);
+  localStorage.setItem('theme', t);
+}
+// Nav
+function toggleMenu(){
+  document.getElementById('mob-menu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.background = window.scrollY > 40 ? 'rgba(11,11,11,.98)' : 'rgba(11,11,11,.9)';
+});
+
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const d = document.documentElement;
+  const pct = (d.scrollTop/(d.scrollHeight - d.clientHeight))*100;
+  document.getElementById('progress-bar').style.width = pct+'%';
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Password / unlock
+let unlocked = sessionStorage.getItem('fc_unlocked') === 'true';
+if(unlocked) applyUnlock();
+
+function openModal(){ document.getElementById('passwordModal').classList.add('open'); setTimeout(()=>document.getElementById('pwInput').focus(),100); }
+function closeModal(){ document.getElementById('passwordModal').classList.remove('open'); document.getElementById('pwInput').value=''; document.getElementById('pwError').style.display='none'; }
+function handleLockedClick(){ if(!unlocked) openModal(); }
+
+function checkPassword(){
+  const pw = document.getElementById('pwInput').value;
+  if(pw === 'mithun2025'){
+    unlocked = true;
+    sessionStorage.setItem('fc_unlocked','true');
+    closeModal();
+    applyUnlock();
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+function applyUnlock(){
+  document.getElementById('unlockBtn').classList.add('unlocked');
+  document.getElementById('unlockBtn').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 018-4.9"/></svg> Unlocked';
+  // Remove locked overlays and show placeholder text indicating where to add images
+  document.querySelectorAll('.locked-area').forEach(el=>{
+    el.onclick = null;
+    el.style.cursor = 'default';
+    el.querySelectorAll('.locked-overlay').forEach(o=>o.style.display='none');
+    const hint = el.querySelector('.lock-hint, .hip-inner');
+    if(hint){ hint.innerHTML = '<div style="font-size:.78rem;color:var(--text3);text-align:center;padding:20px">Add Figma frame or image here</div>'; }
+  });
+}
+
+// Lightbox
+function openLightbox(src){ document.getElementById('lb-img').src=src; document.getElementById('lightbox').classList.add('open'); }
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.getElementById('lb-img').src=''; }
+</script>
 </body>
 </html>
