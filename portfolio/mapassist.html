@@ -68,8 +68,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 
 /* HERO */
 .cs-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 0 80px;position:relative;border-bottom:1px solid var(--border);overflow:hidden}
-.cs-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 65% 45%,rgba(74,148,136,.05) 0%,transparent 65%);pointer-events:none}
-.cs-hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;opacity:.6}
+.cs-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(74,148,136,.07) 0%,transparent 65%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(200,160,96,.04) 0%,transparent 60%);pointer-events:none}
+[data-theme="light"] .cs-hero-bg{background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(74,148,136,.06) 0%,transparent 65%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(122,80,32,.04) 0%,transparent 60%)}
+.cs-hero-grid{position:absolute;inset:0;pointer-events:none;z-index:0}
+#topo-canvas{position:absolute;inset:0;width:100%;height:100%;}
+[data-theme="light"] #topo-canvas{opacity:.4}
 .cs-hero-wrap{max-width:1200px;margin:0 auto;width:100%;padding:0 80px;position:relative;z-index:1}
 .cs-back-link{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:500;color:var(--text3);margin-bottom:48px;transition:color .25s}
 .cs-back-link:hover{color:var(--accent)}
@@ -338,7 +341,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 <!-- HERO -->
 <div class="cs-hero">
   <div class="cs-hero-bg"></div>
-  <div class="cs-hero-grid"></div>
+  <div class="cs-hero-grid">
+    <canvas id="topo-canvas"></canvas>
+  </div>
   <div class="cs-hero-wrap">
     <a href="index.html" class="cs-back-link">← All Projects</a>
     <div class="cs-hero-inner">
@@ -858,8 +863,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 
 <script>
 const root = document.documentElement;
-// Use same key as main site: 'mm-theme'
 root.setAttribute('data-theme', localStorage.getItem('mm-theme') || 'dark');
+
 function toggleTheme(){
   const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   root.setAttribute('data-theme', t);
@@ -883,8 +888,8 @@ window.addEventListener('scroll',()=>{
   const pct = (d.scrollTop/(d.scrollHeight-d.clientHeight))*100;
   document.getElementById('progress-bar').style.width = pct+'%';
 });
-// Set nav bg correctly on load
 updateNavBg();
+
 function csOpenLB(src, alt){
   document.getElementById('cs-lb-img').src = src;
   document.getElementById('cs-lb-img').alt = alt || '';
@@ -896,9 +901,97 @@ function csCloseLB(){
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if(e.key === 'Escape') csCloseLB(); });
+
+const observer = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }});
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── TOPOGRAPHIC CONTOUR LINES ──
+(function(){
+  const canvas = document.getElementById('topo-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function noise(x, y, z){
+    return Math.sin(x * 1.2 + z) * Math.cos(y * 0.9 + z * 0.7)
+         + Math.sin(x * 0.5 + y * 0.8 + z * 0.5) * 0.5
+         + Math.cos(x * 2.1 - y * 0.4 + z * 1.1) * 0.3
+         + Math.sin(x * 0.3 + y * 1.5 - z * 0.3) * 0.4;
+  }
+
+  function isLight(){
+    return document.documentElement.getAttribute('data-theme') === 'light';
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    const light = isLight();
+    const lineColor = light ? '80,60,20' : '74,148,136';
+    const levels = 14;
+    const step = 18;
+
+    for(let lv = 0; lv < levels; lv++){
+      const threshold = -1.8 + (lv / levels) * 3.6;
+      ctx.beginPath();
+
+      for(let gx = 0; gx < W; gx += step){
+        for(let gy = 0; gy < H; gy += step){
+          const nx = gx / W * 5;
+          const ny = gy / H * 3.5;
+          const sx = step / W * 5;
+          const sy = step / H * 3.5;
+          const v00 = noise(nx,      ny,      t);
+          const v10 = noise(nx + sx, ny,      t);
+          const v01 = noise(nx,      ny + sy, t);
+          const v11 = noise(nx + sx, ny + sy, t);
+
+          function interp(a, b, va, vb){
+            if(Math.abs(vb - va) < 0.0001) return a;
+            return a + (threshold - va) / (vb - va) * (b - a);
+          }
+
+          const edges = [];
+          if((v00 < threshold) !== (v10 < threshold))
+            edges.push([interp(gx, gx+step, v00, v10), gy]);
+          if((v10 < threshold) !== (v11 < threshold))
+            edges.push([gx+step, interp(gy, gy+step, v10, v11)]);
+          if((v01 < threshold) !== (v11 < threshold))
+            edges.push([interp(gx, gx+step, v01, v11), gy+step]);
+          if((v00 < threshold) !== (v01 < threshold))
+            edges.push([gx, interp(gy, gy+step, v00, v01)]);
+
+          if(edges.length >= 2){
+            ctx.moveTo(edges[0][0], edges[0][1]);
+            ctx.lineTo(edges[1][0], edges[1][1]);
+          }
+        }
+      }
+
+      const mid = levels / 2;
+      const distFromMid = Math.abs(lv - mid) / mid;
+      const alpha = light
+        ? 0.06 + distFromMid * 0.12
+        : 0.04 + distFromMid * 0.14;
+      ctx.strokeStyle = `rgba(${lineColor},${alpha})`;
+      ctx.lineWidth = lv === Math.floor(levels / 2) ? 1.2 : 0.7;
+      ctx.stroke();
+    }
+
+    t += 0.0018;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+})();
 </script>
 </body>
 </html>
