@@ -16,10 +16,19 @@
   --radius:6px;
 }
 [data-theme="light"]{
-  --bg:#f8f6f2;--bg2:#eeebe6;--bg3:#e4e0da;
-  --text1:#1a1814;--text2:#4a4640;--text3:#7a7570;
-  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.14);
+  --bg:#f2ede4;--bg2:#ebe5db;--bg3:#e2dbd0;
+  --text1:#1a1714;--text2:#564e44;--text3:#8a8278;
+  --accent:#2a5a8a;--accent2:#1e4a7a;
+  --border:rgba(0,0,0,.09);--border2:rgba(0,0,0,.15);
 }
+[data-theme="light"] nav{background:rgba(242,237,228,.95);border-bottom-color:rgba(0,0,0,.1)}
+[data-theme="light"] .nav-logo{color:#1a1714}
+[data-theme="light"] .nav-links a{color:#8a8278}
+[data-theme="light"] .nav-links a:hover,[data-theme="light"] .nav-links a.active{color:#1a1714}
+[data-theme="light"] #mob-menu{background:#f2ede4}
+[data-theme="light"] #mob-menu a{color:#564e44;border-bottom-color:rgba(0,0,0,.08)}
+[data-theme="light"] .breakthrough{background:linear-gradient(135deg,rgba(42,90,138,.05) 0%,rgba(42,90,138,.02) 100%);border-color:rgba(42,90,138,.15)}
+[data-theme="light"] .cs-footer{border-top-color:rgba(0,0,0,.1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text1);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -54,8 +63,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 
 /* HERO */
 .cs-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 0 80px;position:relative;border-bottom:1px solid var(--border);overflow:hidden}
-.cs-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(74,140,200,.06) 0%,transparent 70%);pointer-events:none}
-.cs-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:56px 56px;pointer-events:none}
+.cs-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(74,140,200,.07) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 15% 75%,rgba(42,90,138,.04) 0%,transparent 60%);pointer-events:none}
+[data-theme="light"] .cs-hero-bg{background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(42,90,138,.05) 0%,transparent 70%)}
+.cs-hero-grid{position:absolute;inset:0;pointer-events:none;z-index:0}
+#topo-canvas{position:absolute;inset:0;width:100%;height:100%;}
+[data-theme="light"] #topo-canvas{opacity:.35}
 .cs-hero-wrap{max-width:1200px;margin:0 auto;width:100%;padding:0 80px;position:relative;z-index:1}
 .cs-back-link{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:500;color:var(--text3);margin-bottom:48px;transition:color .25s}
 .cs-back-link:hover{color:var(--accent)}
@@ -286,7 +298,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 <!-- HERO -->
 <div class="cs-hero">
   <div class="cs-hero-bg"></div>
-  <div class="cs-hero-grid"></div>
+  <div class="cs-hero-grid"><canvas id="topo-canvas"></canvas></div>
   <div class="cs-hero-wrap">
     <a href="index.html" class="cs-back-link">← All Projects</a>
     <div class="cs-hero-inner">
@@ -547,29 +559,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 </button>
 
 <script>
-// Theme
+// Theme — use same key as main site
 const root = document.documentElement;
-root.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+root.setAttribute('data-theme', localStorage.getItem('mm-theme') || 'dark');
 function toggleTheme(){
   const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   root.setAttribute('data-theme', t);
-  localStorage.setItem('theme', t);
+  localStorage.setItem('mm-theme', t);
+  updateNavBg();
 }
 // Nav
 function toggleMenu(){
   document.getElementById('mob-menu').classList.toggle('open');
   document.getElementById('hamburger').classList.toggle('open');
 }
+function updateNavBg(){
+  const isLight = root.getAttribute('data-theme') === 'light';
+  const scrolled = window.scrollY > 40;
+  document.getElementById('nav').style.background = isLight
+    ? (scrolled ? 'rgba(242,237,228,.98)' : 'rgba(242,237,228,.95)')
+    : (scrolled ? 'rgba(11,11,11,.98)' : 'rgba(11,11,11,.9)');
+}
 window.addEventListener('scroll',()=>{
-  document.getElementById('nav').style.background = window.scrollY > 40 ? 'rgba(11,11,11,.98)' : 'rgba(11,11,11,.9)';
-});
-
-// Progress bar
-window.addEventListener('scroll',()=>{
+  updateNavBg();
   const d = document.documentElement;
   const pct = (d.scrollTop/(d.scrollHeight - d.clientHeight))*100;
   document.getElementById('progress-bar').style.width = pct+'%';
 });
+updateNavBg();
 
 // Scroll reveal
 const observer = new IntersectionObserver(entries=>{
@@ -613,8 +630,59 @@ function applyUnlock(){
 }
 
 // Lightbox
-function openLightbox(src){ document.getElementById('lb-img').src=src; document.getElementById('lightbox').classList.add('open'); }
-function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.getElementById('lb-img').src=''; }
+function openLightbox(src){ document.getElementById('lb-img').src=src; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.getElementById('lb-img').src=''; document.body.style.overflow=''; }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLightbox(); });
+
+// ── TOPOGRAPHIC CONTOUR LINES ──
+(function(){
+  const canvas = document.getElementById('topo-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+  function resize(){ W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  function noise(x,y,z){
+    return Math.sin(x*1.2+z)*Math.cos(y*0.9+z*0.7)
+          +Math.sin(x*0.5+y*0.8+z*0.5)*0.5
+          +Math.cos(x*2.1-y*0.4+z*1.1)*0.3
+          +Math.sin(x*0.3+y*1.5-z*0.3)*0.4;
+  }
+  function isLight(){ return root.getAttribute('data-theme')==='light'; }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const light = isLight();
+    const lineColor = light ? '42,90,138' : '74,140,200';
+    const levels=14, step=18;
+    for(let lv=0;lv<levels;lv++){
+      const threshold=-1.8+(lv/levels)*3.6;
+      ctx.beginPath();
+      for(let gx=0;gx<W;gx+=step){
+        for(let gy=0;gy<H;gy+=step){
+          const nx=gx/W*5, ny=gy/H*3.5, sx=step/W*5, sy=step/H*3.5;
+          const v00=noise(nx,ny,t), v10=noise(nx+sx,ny,t);
+          const v01=noise(nx,ny+sy,t), v11=noise(nx+sx,ny+sy,t);
+          function interp(a,b,va,vb){ return Math.abs(vb-va)<0.0001?a:a+(threshold-va)/(vb-va)*(b-a); }
+          const edges=[];
+          if((v00<threshold)!==(v10<threshold)) edges.push([interp(gx,gx+step,v00,v10),gy]);
+          if((v10<threshold)!==(v11<threshold)) edges.push([gx+step,interp(gy,gy+step,v10,v11)]);
+          if((v01<threshold)!==(v11<threshold)) edges.push([interp(gx,gx+step,v01,v11),gy+step]);
+          if((v00<threshold)!==(v01<threshold)) edges.push([gx,interp(gy,gy+step,v00,v01)]);
+          if(edges.length>=2){ ctx.moveTo(edges[0][0],edges[0][1]); ctx.lineTo(edges[1][0],edges[1][1]); }
+        }
+      }
+      const mid=levels/2, distFromMid=Math.abs(lv-mid)/mid;
+      const alpha=light?0.06+distFromMid*0.12:0.04+distFromMid*0.14;
+      ctx.strokeStyle=`rgba(${lineColor},${alpha})`;
+      ctx.lineWidth=lv===Math.floor(levels/2)?1.2:0.7;
+      ctx.stroke();
+    }
+    t+=0.0018;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 </script>
 </body>
 </html>
