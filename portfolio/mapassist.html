@@ -248,11 +248,54 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
   .closing-block{padding:56px 24px}
   .cs-footer{flex-direction:column;gap:16px;padding:32px 24px}
 }
+
+/* ── LIGHTBOX ── */
+#cs-lightbox{
+  position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s cubic-bezier(0.16,1,0.3,1);
+}
+#cs-lightbox.open{opacity:1;pointer-events:all}
+#cs-lb-img{
+  max-width:88vw;max-height:88vh;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 32px 80px rgba(0,0,0,.6);
+  transform:scale(.94);
+  transition:transform .4s cubic-bezier(0.16,1,0.3,1);
+  display:block;
+}
+#cs-lightbox.open #cs-lb-img{transform:scale(1)}
+#cs-lb-close{
+  position:fixed;top:28px;right:36px;
+  width:44px;height:44px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50%;
+  color:rgba(255,255,255,.8);
+  font-size:1.1rem;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,border-color .2s,transform .2s;
+  line-height:1;
+}
+#cs-lb-close:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.35);transform:scale(1.1)}
+.cs-zoomable{cursor:zoom-in;transition:opacity .2s}
+.cs-zoomable:hover{opacity:.88}
 </style>
 </head>
 <body>
 
 <div id="progress-bar"></div>
+
+<!-- LIGHTBOX -->
+<div id="cs-lightbox" onclick="csCloseLB()">
+  <button id="cs-lb-close" onclick="csCloseLB()">✕</button>
+  <img id="cs-lb-img" src="" alt="" onclick="event.stopPropagation()" />
+</div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -572,7 +615,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
       v1 — Original Interface · Single overloaded screen
     </div>
     <div style="background:var(--bg2);padding:32px;display:flex;justify-content:center;">
-      <img src="old_mapassist.png" alt="Original MapAssist v1 interface" style="max-width:680px;width:100%;border:1px solid var(--border);border-radius:4px;display:block;" />
+      <img src="old_mapassist.png" alt="Original MapAssist v1 interface" class="cs-zoomable" style="max-width:680px;width:100%;border:1px solid var(--border);border-radius:4px;display:block;" onclick="csOpenLB(this.src, this.alt)" />
     </div>
     <div style="padding:16px 20px;background:var(--bg3);border-top:1px solid var(--border);">
       <ul class="screen-bullets">
@@ -600,7 +643,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 01 — Empty State</div>
-        <img src="Select Device - empty state.png" alt="Device detection — empty state" style="width:100%;display:block;" />
+        <img src="Select Device - empty state.png" alt="Device detection — empty state" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 01</div>
@@ -617,7 +660,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 01 — Device Dropdown</div>
-        <img src="Select Device - device dropdown.png" alt="Device detection — dropdown" style="width:100%;display:block;" />
+        <img src="Select Device - device dropdown.png" alt="Device detection — dropdown" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 01 — Select</div>
@@ -634,7 +677,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 01 — Connected State</div>
-        <img src="Select Device.png" alt="Device detection — connected" style="width:100%;display:block;" />
+        <img src="Select Device.png" alt="Device detection — connected" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 01 — Ready</div>
@@ -651,7 +694,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 02 — Configure Download</div>
-        <img src="Download Data.png" alt="Download Data — configure state" style="width:100%;display:block;" />
+        <img src="Download Data.png" alt="Download Data — configure state" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 02</div>
@@ -668,7 +711,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 02 — In Progress</div>
-        <img src="Download Data-1.png" alt="Download Data — in progress" style="width:100%;display:block;" />
+        <img src="Download Data-1.png" alt="Download Data — in progress" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 02 — Progress</div>
@@ -685,7 +728,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 02 — Complete</div>
-        <img src="Download Data-2.png" alt="Download Data — complete state" style="width:100%;display:block;" />
+        <img src="Download Data-2.png" alt="Download Data — complete state" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 02 — Complete</div>
@@ -702,7 +745,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 03 — Base Station Measurements</div>
-        <img src="Geotag-1.png" alt="Base station measurements modal" style="width:100%;display:block;" />
+        <img src="Geotag-1.png" alt="Base station measurements modal" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 03</div>
@@ -719,7 +762,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 03 — Geotagging Status</div>
-        <img src="Geotag-2.png" alt="Geotagging status view" style="width:100%;display:block;" />
+        <img src="Geotag-2.png" alt="Geotagging status view" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 03 — Status View</div>
@@ -736,7 +779,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 04 — LSM Mode Ready</div>
-        <img src="Download___Geotag_-_Start_geotagging.png" alt="LSM geotagging ready state" style="width:100%;display:block;" />
+        <img src="Download___Geotag_-_Start_geotagging.png" alt="LSM geotagging ready state" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 04</div>
@@ -753,7 +796,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 04 — LSM Multi-Flight Selection</div>
-        <img src="Download___Geotag_-_Geotag_folder_selection.png" alt="LSM folder selection" style="width:100%;display:block;" />
+        <img src="Download___Geotag_-_Geotag_folder_selection.png" alt="LSM folder selection" class="cs-zoomable" style="width:100%;display:block;" onclick="csOpenLB(this.src, this.alt)" />
       </div>
       <div>
         <div class="screen-num">Flow 04 — Multi-Flight</div>
@@ -842,7 +885,17 @@ window.addEventListener('scroll',()=>{
 });
 // Set nav bg correctly on load
 updateNavBg();
-const observer = new IntersectionObserver(entries=>{
+function csOpenLB(src, alt){
+  document.getElementById('cs-lb-img').src = src;
+  document.getElementById('cs-lb-img').alt = alt || '';
+  document.getElementById('cs-lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function csCloseLB(){
+  document.getElementById('cs-lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') csCloseLB(); });
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }});
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
