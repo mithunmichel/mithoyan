@@ -583,22 +583,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 
   <div class="screens-sections">
 
-    <!-- FLOW 1 — DEVICE DETECTION -->
+    <!-- FLOW 1 — DEVICE DETECTION EMPTY STATE -->
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
-        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 01 — Device Detection</div>
-        <div style="padding:16px;display:flex;flex-direction:column;gap:8px;">
-          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;">
-            <span>Select UAV</span><span style="font-size:.72rem;color:rgba(200,72,72,.8);background:rgba(200,72,72,.08);padding:3px 10px;border-radius:2px;border:1px solid rgba(200,72,72,.2);">Not connected</span>
-          </div>
-          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;">
-            <span>Select Base Station</span><span style="font-size:.72rem;color:rgba(200,72,72,.8);background:rgba(200,72,72,.08);padding:3px 10px;border-radius:2px;border:1px solid rgba(200,72,72,.2);">Not connected</span>
-          </div>
-          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;">
-            <span>Select Storage</span><span style="font-size:.72rem;color:rgba(200,72,72,.8);background:rgba(200,72,72,.08);padding:3px 10px;border-radius:2px;border:1px solid rgba(200,72,72,.2);">Not connected</span>
-          </div>
-          <div style="background:rgba(74,148,136,.15);border:1px solid rgba(74,148,136,.3);border-radius:4px;padding:8px 14px;font-size:.78rem;text-align:center;color:var(--accent);font-weight:600;">Refresh</div>
-        </div>
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 01 — Empty State</div>
+        <img src="Select Device - empty state.png" alt="Device detection — empty state" style="width:100%;display:block;" />
       </div>
       <div>
         <div class="screen-num">Flow 01</div>
@@ -611,19 +600,87 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
       </div>
     </div>
 
-    <!-- FLOW 2 — DOWNLOAD DATA with real screen -->
+    <!-- FLOW 1B — DEVICE DROPDOWN -->
     <div class="screen-section">
       <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
-        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 02 — Download in Progress</div>
-        <img src="Geotag.png" alt="Download & Geotag screen — in progress state" style="width:100%;display:block;" />
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 01 — Device Dropdown</div>
+        <img src="Select Device - device dropdown.png" alt="Device detection — dropdown" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 01 — Select</div>
+        <div class="screen-title">Device Selection</div>
+        <ul class="screen-bullets">
+          <li>Detected devices populate the dropdown automatically — only connected, valid hardware appears as options</li>
+          <li>Device name and ID shown on selection — pilots can confirm they're connected to the correct UAV unit, critical in multi-drone operations</li>
+          <li>Base station and storage selection follow the same gated pattern</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLOW 1C — DEVICE CONNECTED -->
+    <div class="screen-section">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 01 — Connected State</div>
+        <img src="Select Device.png" alt="Device detection — connected" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 01 — Ready</div>
+        <div class="screen-title">All Devices Connected</div>
+        <ul class="screen-bullets">
+          <li>Full connection confirmed explicitly — the system never assumes readiness. Pilots get a clear signal before proceeding to download.</li>
+          <li>Connected device names shown persistently so pilots can verify the correct hardware is still active throughout the session</li>
+          <li>The Download section only becomes actionable once this state is achieved — progressive disclosure in action</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLOW 2 — DOWNLOAD DATA CONFIGURE -->
+    <div class="screen-section">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 02 — Configure Download</div>
+        <img src="Download Data.png" alt="Download Data — configure state" style="width:100%;display:block;" />
       </div>
       <div>
         <div class="screen-num">Flow 02</div>
         <div class="screen-title">Download Flight Data</div>
         <ul class="screen-bullets">
-          <li>File count, transfer percentage, and time remaining update in real time — "Is it stuck or slow?" is no longer a valid question. The system answers it continuously.</li>
-          <li>Date range filtering lets pilots pull selectively — mission-specific data only, not everything on the device</li>
-          <li>Post-download, the system scans for pink images and missing frames before geotagging begins. Pilots are alerted while a corrective re-flight is still possible.</li>
+          <li>Destination folder and date range are set before transfer begins — date filtering lets pilots pull only the mission-specific data they need, not everything on the device</li>
+          <li>Download section only unlocks after devices are confirmed connected — the system enforces sequence, pilots can't skip steps</li>
+          <li>Post-download, the system scans for pink images and missing frames before geotagging begins — pilots are alerted while a corrective re-flight is still possible</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLOW 2B — DOWNLOAD IN PROGRESS -->
+    <div class="screen-section">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 02 — In Progress</div>
+        <img src="Download Data-1.png" alt="Download Data — in progress" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 02 — Progress</div>
+        <div class="screen-title">Live Transfer Visibility</div>
+        <ul class="screen-bullets">
+          <li>File count, percentage, and time remaining all update in real time — "Is it stuck or slow?" is no longer a valid question. The system answers it continuously.</li>
+          <li>Pause and cancel always accessible, with an explicit data-loss warning before any abort is confirmed — no irreversible actions happen silently</li>
+          <li>The progress bar shows actual file-level progress, not a spinner that could mean anything</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLOW 2C — DOWNLOAD COMPLETE -->
+    <div class="screen-section">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 02 — Complete</div>
+        <img src="Download Data-2.png" alt="Download Data — complete state" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 02 — Complete</div>
+        <div class="screen-title">Download Complete + Anomaly Scan</div>
+        <ul class="screen-bullets">
+          <li>On completion the system immediately scans downloaded data for anomalies — pink images, missing frames, corrupted files — before geotagging is allowed to begin</li>
+          <li>Pilots are alerted to data issues while they're still in the field and the drone is still deployable for a corrective re-flight</li>
+          <li>The Geotagging section activates only after a clean download confirmation — another gate in the sequential flow</li>
         </ul>
       </div>
     </div>
