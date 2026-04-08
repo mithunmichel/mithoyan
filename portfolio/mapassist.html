@@ -17,10 +17,23 @@
   --radius:6px;
 }
 [data-theme="light"]{
-  --bg:#f8f6f2;--bg2:#eeebe6;--bg3:#e4e0da;
-  --text1:#1a1814;--text2:#4a4640;--text3:#7a7570;
-  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.14);
+  --bg:#f2ede4;--bg2:#ebe5db;--bg3:#e2dbd0;
+  --text1:#1a1714;--text2:#564e44;--text3:#8a8278;
+  --accent:#7a5020;--accent2:#6e4c24;
+  --warn:#9a4820;--err:#9a2828;--ok:#2a7430;
+  --border:rgba(0,0,0,.09);--border2:rgba(0,0,0,.15);
 }
+[data-theme="light"] nav{background:rgba(242,237,228,.95);border-bottom-color:rgba(0,0,0,.1)}
+[data-theme="light"] .nav-logo{color:#1a1714}
+[data-theme="light"] .nav-links a{color:#8a8278}
+[data-theme="light"] .nav-links a:hover,[data-theme="light"] .nav-links a.active{color:#1a1714}
+[data-theme="light"] #mob-menu{background:#f2ede4}
+[data-theme="light"] #mob-menu a{color:#564e44;border-bottom-color:rgba(0,0,0,.08)}
+[data-theme="light"] .prob-card-quote{background:rgba(0,0,0,.03);border-left-color:rgba(0,0,0,.18);color:#564e44}
+[data-theme="light"] .nda-note{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.12)}
+[data-theme="light"] .cs-footer{border-top-color:rgba(0,0,0,.1)}
+[data-theme="light"] .ft-row:hover{background:rgba(0,0,0,.02)}
+[data-theme="light"] .reflect-item,[data-theme="light"] .iq-card,[data-theme="light"] .prob-card,[data-theme="light"] .dev-card,[data-theme="light"] .state-chip.idle{background:var(--bg);border-color:var(--border2)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text1);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -56,7 +69,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 /* HERO */
 .cs-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 0 80px;position:relative;border-bottom:1px solid var(--border);overflow:hidden}
 .cs-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 65% 45%,rgba(74,148,136,.05) 0%,transparent 65%);pointer-events:none}
-.cs-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.cs-hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;opacity:.6}
 .cs-hero-wrap{max-width:1200px;margin:0 auto;width:100%;padding:0 80px;position:relative;z-index:1}
 .cs-back-link{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:500;color:var(--text3);margin-bottom:48px;transition:color .25s}
 .cs-back-link:hover{color:var(--accent)}
@@ -288,7 +301,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
     <div class="cs-hero-inner">
       <div>
         <div class="cs-eyebrow">Desktop App · Defence · UAV Operations</div>
-        <h1 class="cs-title">Map<em>Assist</em> 2.0</h1>
+        <h1 class="cs-title">Map<em>Assist</em></h1>
         <p class="cs-subtitle">Mission-critical UAV data processing software — built for remote, high-security environments where connectivity is zero, stakes are high, and there is no second chance.</p>
         <div class="cs-meta-row">
           <div class="cs-meta-item"><span class="cs-meta-label">Role</span><span class="cs-meta-val">Lead Product Designer</span></div>
@@ -802,22 +815,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 
 <script>
 const root = document.documentElement;
-root.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+// Use same key as main site: 'mm-theme'
+root.setAttribute('data-theme', localStorage.getItem('mm-theme') || 'dark');
 function toggleTheme(){
   const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   root.setAttribute('data-theme', t);
-  localStorage.setItem('theme', t);
+  localStorage.setItem('mm-theme', t);
+  updateNavBg();
 }
 function toggleMenu(){
   document.getElementById('mob-menu').classList.toggle('open');
   document.getElementById('hamburger').classList.toggle('open');
 }
+function updateNavBg(){
+  const isLight = root.getAttribute('data-theme') === 'light';
+  const scrolled = window.scrollY > 40;
+  document.getElementById('nav').style.background = isLight
+    ? (scrolled ? 'rgba(242,237,228,.98)' : 'rgba(242,237,228,.95)')
+    : (scrolled ? 'rgba(11,11,11,.98)' : 'rgba(11,11,11,.9)');
+}
 window.addEventListener('scroll',()=>{
-  document.getElementById('nav').style.background = window.scrollY > 40 ? 'rgba(11,11,11,.98)' : 'rgba(11,11,11,.9)';
+  updateNavBg();
   const d = document.documentElement;
   const pct = (d.scrollTop/(d.scrollHeight-d.clientHeight))*100;
   document.getElementById('progress-bar').style.width = pct+'%';
 });
+// Set nav bg correctly on load
+updateNavBg();
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }});
 },{threshold:.1});
