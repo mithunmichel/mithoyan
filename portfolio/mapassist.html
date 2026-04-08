@@ -489,32 +489,213 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 </div></div>
 </div>
 
-<!-- SECTION 9: KEY SCREENS -->
+<!-- SECTION 8.5: FIELD RESEARCH -->
 <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
 <div class="wrap"><div class="cs-section reveal">
-  <div class="section-label">Key Screens</div>
-  <h2 class="section-title">Four moments that <em>define the experience</em>.</h2>
-  <div class="nda-note">
-    <svg style="flex-shrink:0;margin-top:3px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(74,148,136,.6)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-    <span><strong>Hardware-bundled product — screens available on request.</strong> MapAssist ships with IdeaForge defence-grade and industrial UAVs. Additional screens available via direct conversation.</span>
+  <div class="section-label">Field Research</div>
+  <h2 class="section-title">12 pilots. Field shadowing.<br>The same fears, said <em>differently</em>.</h2>
+  <p class="body-text" style="max-width:640px">Before any wireframe was drawn, I spent time in the field with 12 drone mapping pilots — observing their post-flight workflows firsthand, and conducting structured interviews. The goal wasn't to validate assumptions. It was to understand what the job actually felt like under operational pressure.</p>
+  <p class="body-text" style="max-width:640px">What emerged wasn't a list of feature requests. It was a portrait of anxiety — pilots operating a high-stakes tool that gave them almost no feedback, no guidance, and no recovery path when something went wrong. The tool wasn't broken. It was <strong>silent</strong>.</p>
+
+  <!-- Research stats -->
+  <div class="process-steps" style="margin:36px 0 0">
+    <div class="ps"><div class="ps-n">12</div><div class="ps-t">Pilots Researched</div><div class="ps-d">Interviewed and field-shadowed during active post-flight ops</div></div>
+    <div class="ps"><div class="ps-n">5</div><div class="ps-t">Anxiety Themes</div><div class="ps-d">Consistent pain clusters identified across all participants</div></div>
+    <div class="ps"><div class="ps-n">100%</div><div class="ps-t">Learned by Memory</div><div class="ps-d">Not one pilot was guided through the workflow by the system itself</div></div>
+    <div class="ps"><div class="ps-n">0</div><div class="ps-t">Error Recovery Paths</div><div class="ps-d">Any failure in v1 required restarting the entire operation from scratch</div></div>
   </div>
+
+  <!-- Quote clusters -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-top:36px;">
+
+    <div style="background:var(--bg);padding:28px;">
+      <div class="section-label" style="margin-bottom:16px">System Feedback Void</div>
+      <div class="prob-card-quote" style="margin-bottom:12px;">"I don't know if everything is connected properly until something fails."</div>
+      <div class="prob-card-quote" style="margin-bottom:12px;">"Sometimes the system says nothing, and I'm just guessing if I can proceed."</div>
+      <div class="prob-card-quote">"I click download… and then I just wait. I don't know what's happening. Is it stuck? Is it slow? Or did something fail?"</div>
+    </div>
+
+    <div style="background:var(--bg);padding:28px;">
+      <div class="section-label" style="margin-bottom:16px">Fear of Irreversibility</div>
+      <div class="prob-card-quote" style="margin-bottom:12px;">"If I mess up here, the entire mission is gone."</div>
+      <div class="prob-card-quote" style="margin-bottom:12px;">"There's no second chance if the data gets corrupted."</div>
+      <div class="prob-card-quote">"I'm scared to click abort because I don't know what I'll lose."</div>
+    </div>
+
+    <div style="background:var(--bg);padding:28px;">
+      <div class="section-label" style="margin-bottom:16px">Operational Ambiguity</div>
+      <div class="prob-card-quote" style="margin-bottom:12px;">"I'm not always sure what the next step is supposed to be."</div>
+      <div class="prob-card-quote" style="margin-bottom:12px;">"Do I geotag first or download from base station first? It's not obvious."</div>
+      <div class="prob-card-quote">"I've learned the process by memory, not because the system guides me."</div>
+    </div>
+
+    <div style="background:var(--bg);padding:28px;">
+      <div class="section-label" style="margin-bottom:16px">Field Pressure & Time</div>
+      <div class="prob-card-quote" style="margin-bottom:12px;">"We're usually in a hurry. There's no time to figure things out."</div>
+      <div class="prob-card-quote" style="margin-bottom:12px;">"Everything needs to work the first time. Out here, you can't rely on trial and error."</div>
+      <div class="prob-card-quote">"There's too much to keep track of mentally — devices, data, steps… all at once."</div>
+    </div>
+
+  </div>
+
+  <!-- Key insight -->
+  <div class="nda-note" style="margin-top:32px;border-left-color:var(--accent);">
+    <svg style="flex-shrink:0;margin-top:3px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(74,148,136,.8)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span><strong>The insight that changed everything:</strong> The tool wasn't broken — it was silent. Pilots weren't failing because they lacked skill; they were failing because the system gave them no legible signal of what was happening, what was expected next, or what had gone wrong. Redesigning around that gap was the entire project.</span>
+  </div>
+
+</div></div>
+</div>
+
+<!-- SECTION 8.6: BEFORE / AFTER -->
+<div style="background:var(--bg);border-bottom:1px solid var(--border)">
+<div class="wrap"><div class="cs-section reveal">
+  <div class="section-label">Before & After</div>
+  <h2 class="section-title">Single screen overload <em>→</em> sequential disclosure</h2>
+  <p class="body-text" style="max-width:640px">The original MapAssist was a single-page desktop app that presented every configuration option simultaneously — device selection, GPS coordinates, processing mode, file management, upload settings — with no progressive disclosure and no error recovery. Only a pilot who had already memorised the tool could operate it reliably.</p>
+
+  <div style="margin-top:32px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+    <div style="padding:12px 20px;background:var(--bg2);border-bottom:1px solid var(--border);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,72,72,.7);">
+      v1 — Original Interface · Single overloaded screen
+    </div>
+    <div style="background:var(--bg2);padding:32px;display:flex;justify-content:center;">
+      <img src="old_mapassist.png" alt="Original MapAssist v1 interface" style="max-width:680px;width:100%;border:1px solid var(--border);border-radius:4px;display:block;" />
+    </div>
+    <div style="padding:16px 20px;background:var(--bg3);border-top:1px solid var(--border);">
+      <ul class="screen-bullets">
+        <li>Every configuration option exposed simultaneously — GPS coordinates, processing mode, file management, upload settings, connection status all on one screen</li>
+        <li>No sequential logic — a new pilot had no indication of what to do first, second, or last</li>
+        <li>No error handling UX — any failure required restarting the entire operation from scratch</li>
+        <li>Only an expert who had memorised the tool could operate it without errors</li>
+      </ul>
+    </div>
+  </div>
+
+</div></div>
+</div>
+
+<!-- SECTION 9: KEY SCREENS — DOWNLOAD & GEOTAG FLOWS -->
+<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+<div class="wrap"><div class="cs-section reveal">
+  <div class="section-label">Design Walkthrough</div>
+  <h2 class="section-title">Four flows. One coherent <em>operational sequence</em>.</h2>
+  <p class="body-text" style="max-width:640px">The redesign decomposes the original single-screen experience into four sequentially disclosed flows — each addressing a specific stage of post-flight data processing. Pilots move through them in order. The system reveals the next step only once the current one is complete.</p>
+
   <div class="screens-sections">
+
+    <!-- FLOW 1 — DEVICE DETECTION -->
     <div class="screen-section">
-      <div class="screen-vis-box"><div class="svb-inner"><div class="svb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(74,148,136,.5)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></div><div class="svb-label">Pre-flight config screen<br>Figma frame · 1440×900</div></div></div>
-      <div><div class="screen-num">Screen 01</div><div class="screen-title">Pre-flight Configuration</div><ul class="screen-bullets"><li>SD card format selection drives the entire downstream workflow — surfaced first to prevent downstream errors</li><li>Only valid options shown based on detected hardware — no dead ends</li><li>Encrypted and regular storage handled as distinct, clearly labelled paths</li></ul></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 01 — Device Detection</div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:8px;">
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;">
+            <span>Select UAV</span><span style="font-size:.72rem;color:rgba(200,72,72,.8);background:rgba(200,72,72,.08);padding:3px 10px;border-radius:2px;border:1px solid rgba(200,72,72,.2);">Not connected</span>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;">
+            <span>Select Base Station</span><span style="font-size:.72rem;color:rgba(200,72,72,.8);background:rgba(200,72,72,.08);padding:3px 10px;border-radius:2px;border:1px solid rgba(200,72,72,.2);">Not connected</span>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;">
+            <span>Select Storage</span><span style="font-size:.72rem;color:rgba(200,72,72,.8);background:rgba(200,72,72,.08);padding:3px 10px;border-radius:2px;border:1px solid rgba(200,72,72,.2);">Not connected</span>
+          </div>
+          <div style="background:rgba(74,148,136,.15);border:1px solid rgba(74,148,136,.3);border-radius:4px;padding:8px 14px;font-size:.78rem;text-align:center;color:var(--accent);font-weight:600;">Refresh</div>
+        </div>
+      </div>
+      <div>
+        <div class="screen-num">Flow 01</div>
+        <div class="screen-title">Device Detection & Connection</div>
+        <ul class="screen-bullets">
+          <li>Each device — UAV, base station, and storage — shows an explicit per-device connection state. Pilots know exactly what's missing without guessing.</li>
+          <li>Refresh on demand rather than auto-polling, giving pilots control in environments where USB connections are physically unstable</li>
+          <li>Encryption failures surface inline with a guided recovery modal — the v1 nightmare of getting locked out with no path forward is gone</li>
+        </ul>
+      </div>
     </div>
+
+    <!-- FLOW 2 — DOWNLOAD DATA with real screen -->
     <div class="screen-section">
-      <div class="screen-vis-box"><div class="svb-inner"><div class="svb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(74,148,136,.5)" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div><div class="svb-label">Device detection screen<br>Connected + disconnected states</div></div></div>
-      <div><div class="screen-num">Screen 02</div><div class="screen-title">Device Detection & Readiness</div><ul class="screen-bullets"><li>All required hardware shown as cards with real-time connection status</li><li>Unmet requirements highlighted with specific resolution steps</li><li>Proceed action only activates when full hardware readiness is confirmed</li></ul></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 02 — Download in Progress</div>
+        <img src="Geotag.png" alt="Download & Geotag screen — in progress state" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 02</div>
+        <div class="screen-title">Download Flight Data</div>
+        <ul class="screen-bullets">
+          <li>File count, transfer percentage, and time remaining update in real time — "Is it stuck or slow?" is no longer a valid question. The system answers it continuously.</li>
+          <li>Date range filtering lets pilots pull selectively — mission-specific data only, not everything on the device</li>
+          <li>Post-download, the system scans for pink images and missing frames before geotagging begins. Pilots are alerted while a corrective re-flight is still possible.</li>
+        </ul>
+      </div>
     </div>
+
+    <!-- FLOW 3 — GEOTAGGING BASE STATION MODAL -->
     <div class="screen-section">
-      <div class="screen-vis-box"><div class="svb-inner"><div class="svb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(74,148,136,.5)" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div><div class="svb-label">Download progress screen<br>Active progress state</div></div></div>
-      <div><div class="screen-num">Screen 03</div><div class="screen-title">Download & Progress Visibility</div><ul class="screen-bullets"><li>File count, transfer percentage, and time remaining all visible simultaneously — the system is never silent</li><li>Per-device progress tracked independently for multi-device setups</li><li>Abort path always accessible, with explicit data-loss warning before confirmation</li></ul></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 03 — Base Station Measurements</div>
+        <img src="Geotag-1.png" alt="Base station measurements modal" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 03</div>
+        <div class="screen-title">Geotagging — Standalone</div>
+        <ul class="screen-bullets">
+          <li>Base station measurements are auto-fetched from hardware metadata but remain fully editable. Research revealed pilots sometimes need to verify or correct base data due to hardware calibration drift.</li>
+          <li>The modal surfaces this data transparently without cluttering the main screen — available on demand, not constantly visible</li>
+          <li>Processing type, EXIF options, and cloud upload configured before geotagging starts. Cloud upload queues for when connectivity is later restored — no blocking on internet.</li>
+        </ul>
+      </div>
     </div>
+
+    <!-- FLOW 3B — VIEW STATUS -->
     <div class="screen-section">
-      <div class="screen-vis-box"><div class="svb-inner"><div class="svb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(74,148,136,.5)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg></div><div class="svb-label">Geotagging screen<br>Processing + completion states</div></div></div>
-      <div><div class="screen-num">Screen 04</div><div class="screen-title">Geotagging & Output</div><ul class="screen-bullets"><li>GPS coordinate injection into image EXIF shown as a live process — operators see exactly which files are being processed</li><li>Single and multi-flight (LSM) handled transparently — same interface, system adapts</li><li>Completion state confirms file count, output location, and triggers cloud upload prompt</li></ul></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 03 — Geotagging Status</div>
+        <img src="Geotag-2.png" alt="Geotagging status view" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 03 — Status View</div>
+        <div class="screen-title">Live Geotagging Progress</div>
+        <ul class="screen-bullets">
+          <li>Per-flight geotagging status with image count, data size, and live percentage progress — all in a non-blocking modal so the main workflow stays accessible</li>
+          <li>Pause and cancel are always available, with explicit warnings before any irreversible action</li>
+          <li>Start and end timestamps give pilots operational records for mission documentation</li>
+        </ul>
+      </div>
     </div>
+
+    <!-- FLOW 4 — LSM READY STATE -->
+    <div class="screen-section">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 04 — LSM Mode Ready</div>
+        <img src="Download___Geotag_-_Start_geotagging.png" alt="LSM geotagging ready state" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 04</div>
+        <div class="screen-title">Geotagging — LSM (Large Scale Mapping)</div>
+        <ul class="screen-bullets">
+          <li>"Part of LSM" radio selection is a single interaction that changes system behaviour downstream — the system now expects multiple flights to the same master folder and holds cloud processing until the pilot signals final completion</li>
+          <li>"LSM Project Completed" checkbox acts as a deliberate final confirmation before the dataset is sent for cloud processing. The pilot controls the trigger — the system never assumes completeness.</li>
+          <li>LSM complexity — multi-flight coordination, deferred sync, master folder management — is fully handled behind this single selection. The complexity is real; the cognitive load is not.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLOW 4 — LSM FOLDER SELECTION -->
+    <div class="screen-section">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);">Flow 04 — LSM Multi-Flight Selection</div>
+        <img src="Download___Geotag_-_Geotag_folder_selection.png" alt="LSM folder selection" style="width:100%;display:block;" />
+      </div>
+      <div>
+        <div class="screen-num">Flow 04 — Multi-Flight</div>
+        <div class="screen-title">LSM Folder & Per-Flight Configuration</div>
+        <ul class="screen-bullets">
+          <li>Flight folder dropdown lists all flights under the LSM project — Flight 1 through Flight 6 — making the multi-flight structure visible and navigable</li>
+          <li>Base station measurements are configured per-flight. Pilots can set different height parameters for each leg of the survey without restarting the tool.</li>
+          <li>UAV shown as connected and named (Q6 UAV 03447Y593) — the system always surfaces verified device state at the point of action, not just at startup</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </div></div>
 </div>
