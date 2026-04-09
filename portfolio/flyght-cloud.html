@@ -516,6 +516,92 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:68px;d
 </div></div>
 </div>
 
+<!-- SECTION 8.5: CRITICAL GAP -->
+<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+<div class="wrap"><div class="cs-section reveal">
+  <div class="section-label">Critical Gap Identified During POC</div>
+  <h2 class="section-title">The platform could verify from above.<br><em>Nobody had designed for the ground.</em></h2>
+  <p class="body-text" style="max-width:640px">During the Flyght Cloud POC, a structural gap emerged that the platform itself couldn't close. The central audit system was getting smarter — but the field layer feeding it remained entirely manual, unstructured, and unreliable.</p>
+
+  <!-- Two column: problem + consequence -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-top:36px;">
+
+    <div style="background:var(--bg);padding:28px;">
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,72,72,.7);margin-bottom:18px;display:flex;align-items:center;gap:10px;">
+        <span style="width:20px;height:1px;background:rgba(200,72,72,.5);display:block;"></span>How field officers were working
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:rgba(200,72,72,.04);border:1px solid rgba(200,72,72,.12);border-radius:4px;">
+          <svg style="flex-shrink:0;margin-top:2px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(200,72,72,.6)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>
+          <div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--text1);margin-bottom:3px;">Entirely manual operations</div>
+            <div style="font-size:.75rem;color:var(--text3);line-height:1.6;">Paper-based data recording, no digital tools, no standardised process</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:rgba(200,72,72,.04);border:1px solid rgba(200,72,72,.12);border-radius:4px;">
+          <svg style="flex-shrink:0;margin-top:2px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(200,72,72,.6)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20"/></svg>
+          <div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--text1);margin-bottom:3px;">Lat/long used inefficiently</div>
+            <div style="font-size:.75rem;color:var(--text3);line-height:1.6;">Device GPS captured from roads and adjacent areas — coordinates didn't represent the actual asset location</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:rgba(200,72,72,.04);border:1px solid rgba(200,72,72,.12);border-radius:4px;">
+          <svg style="flex-shrink:0;margin-top:2px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(200,72,72,.6)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--text1);margin-bottom:3px;">No system support</div>
+            <div style="font-size:.75rem;color:var(--text3);line-height:1.6;">Officers adapted their own processes — no structured capture, no validation, no integration with the central platform</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg);padding:28px;">
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,112,64,.7);margin-bottom:18px;display:flex;align-items:center;gap:10px;">
+        <span style="width:20px;height:1px;background:rgba(200,112,64,.5);display:block;"></span>What this created
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:rgba(200,112,64,.04);border:1px solid rgba(200,112,64,.12);border-radius:4px;">
+          <svg style="flex-shrink:0;margin-top:2px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(200,112,64,.6)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--text1);margin-bottom:3px;">Delays in audit cycles</div>
+            <div style="font-size:.75rem;color:var(--text3);line-height:1.6;">Ambiguous field data required repeat visits — cases that could be closed were left open for weeks</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:rgba(200,112,64,.04);border:1px solid rgba(200,112,64,.12);border-radius:4px;">
+          <svg style="flex-shrink:0;margin-top:2px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(200,112,64,.6)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+          <div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--text1);margin-bottom:3px;">Compounding errors</div>
+            <div style="font-size:.75rem;color:var(--text3);line-height:1.6;">Inaccurate GPS + unstructured capture meant the central platform was making decisions on unreliable inputs</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:rgba(200,112,64,.04);border:1px solid rgba(200,112,64,.12);border-radius:4px;">
+          <svg style="flex-shrink:0;margin-top:2px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(200,112,64,.6)" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
+          <div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--text1);margin-bottom:3px;">Inconsistent evidence</div>
+            <div style="font-size:.75rem;color:var(--text3);line-height:1.6;">Every officer captured differently — photos couldn't be matched to records, evidence couldn't be compared across cases</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Design opportunity + CTA -->
+  <div style="margin-top:32px;padding:32px 36px;background:rgba(74,140,200,.04);border:1px solid rgba(74,140,200,.15);border-radius:var(--radius);position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(74,140,200,.06),transparent 70%);pointer-events:none;"></div>
+    <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(74,140,200,.7);margin-bottom:14px;">💡 Design Opportunity</div>
+    <p style="font-size:1rem;font-weight:600;color:var(--text1);line-height:1.55;letter-spacing:-.01em;max-width:620px;margin-bottom:20px;">The audit intelligence platform was only as good as the data being fed into it. Fixing the platform layer without fixing the field layer meant building on an unreliable foundation.</p>
+    <p style="font-size:.9rem;color:var(--text2);line-height:1.8;max-width:600px;margin-bottom:28px;">I identified the opportunity to introduce a dedicated field verification system — a mobile-first tool that would bring structure, accuracy, and audit traceability to ground-level data collection. Not a bolt-on feature, but a purpose-built input layer for the audit ecosystem.</p>
+    <a href="pmay.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 24px;background:var(--accent);color:var(--bg);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;text-decoration:none;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      This led me to independently explore a mobile-first solution
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div style="margin-top:12px;font-size:.72rem;color:var(--text3);">View the PMAY Field App case study →</div>
+  </div>
+
+</div></div>
+</div>
+
 <!-- SECTION 9: REFLECTION -->
 <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
 <div class="wrap"><div class="cs-section reveal">
